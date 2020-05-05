@@ -7,15 +7,18 @@ class LoginForm extends StatefulWidget {
 }
 
 class LoginFormState extends State {
-  double formPadding = 6.0;
+  final double formPadding = 6.0;
+  final double formMargin = 40.0;
+  final double borderRadius = 10.0;
+
   String credentials = '';
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    TextStyle textStyle = Theme.of(context).textTheme.title;
-    Color primaryColorDark = Theme.of(context).primaryColorDark;
+    final TextStyle textStyle = Theme.of(context).textTheme.title;
+    final Color primaryColorDark = Theme.of(context).primaryColorDark;
 
     return Form(
         child: Container(
@@ -31,33 +34,33 @@ class LoginFormState extends State {
                 ])));
   }
 
-  Padding header(Color primaryColorDark) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: 10.0),
+  Widget header(Color primaryColorDark) {
+    return Container(
+      margin: EdgeInsets.only(bottom: formMargin),
       child: Text('GoalMine',
           style: TextStyle(
-              fontSize: 50.0,
-              color: primaryColorDark
+              fontSize: 50,
+              color: primaryColorDark,
+              fontWeight: FontWeight.w300
           )),
     );
   }
 
-  Padding emailField(TextStyle textStyle) {
+  Widget emailField(TextStyle textStyle) {
     return Padding(
-        padding: EdgeInsets.only(top: formPadding, bottom: formPadding),
+        padding: EdgeInsets.only(bottom: formPadding),
         child: TextField(
           controller: emailController,
           style: textStyle,
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
               labelText: 'Email',
-              labelStyle: textStyle,
               border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(5.0))),
+                  borderRadius: BorderRadius.circular(borderRadius))),
         ));
   }
 
-  Padding passwordField(TextStyle textStyle) {
+  Widget passwordField(TextStyle textStyle) {
     return Padding(
         padding: EdgeInsets.only(top: formPadding, bottom: formPadding),
         child: TextField(
@@ -66,20 +69,21 @@ class LoginFormState extends State {
           keyboardType: TextInputType.visiblePassword,
           decoration: InputDecoration(
               labelText: 'Password',
-              labelStyle: textStyle,
               border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(5.0))),
+                  borderRadius: BorderRadius.circular(borderRadius))),
         ));
   }
 
-  Container loginButton(Color primaryColorDark) {
+  Widget loginButton(Color buttonColor) {
     return Container(
       height: 60,
-      margin: EdgeInsets.only(top: 15),
+      margin: EdgeInsets.only(top: formMargin),
       child: SizedBox.expand(
           child: RaisedButton(
-            color: primaryColorDark,
+            color: buttonColor,
             textColor: Colors.white,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(borderRadius)),
             onPressed: () {
               setState(() {
                 credentials = 'Email: ${emailController.text}, '
@@ -87,12 +91,13 @@ class LoginFormState extends State {
               });
             },
             child: Text('LOGIN',
-              textScaleFactor: 1.5,
+              textScaleFactor: 1.3,
               style: TextStyle(
-                letterSpacing: 1.5,
+                letterSpacing: 2.0,
+                fontWeight: FontWeight.w400
               ),
             ),
-          )),
+      )),
     );
   }
 }
