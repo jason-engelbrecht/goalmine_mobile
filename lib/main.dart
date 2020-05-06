@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:goalmine_mobile/screens/login.dart';
+import 'package:goalmine_mobile/ui/login.dart';
 
 void main() => runApp(App());
 

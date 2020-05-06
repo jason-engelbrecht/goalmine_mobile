@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:goalmine_mobile/screens/home.dart';
+import 'package:goalmine_mobile/ui/nav.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -7,9 +7,10 @@ class Login extends StatefulWidget {
 }
 
 class LoginState extends State {
-  final double formPadding = 6.0;
+  final double formFieldPadding = 6.0;
   final double formMargin = 40.0;
   final double borderRadius = 10.0;
+  final double letterSpacing = 2.0;
 
   String credentials = '';
   TextEditingController emailController = TextEditingController();
@@ -30,8 +31,7 @@ class LoginState extends State {
                       header(primaryColorDark),
                       emailField(textStyle),
                       passwordField(textStyle),
-                      loginButton(primaryColorDark),
-                      Text(credentials)
+                      loginButton(primaryColorDark)
                     ]))));
   }
 
@@ -48,13 +48,18 @@ class LoginState extends State {
 
   Widget emailField(TextStyle textStyle) {
     return Padding(
-        padding: EdgeInsets.only(bottom: formPadding),
+        padding: EdgeInsets.only(bottom: formFieldPadding),
         child: TextField(
           controller: emailController,
           style: textStyle,
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
-              labelText: 'Email',
+              labelText: 'EMAIL',
+              labelStyle: TextStyle(
+                  fontSize: 17.5,
+                  letterSpacing: letterSpacing,
+                  fontWeight: FontWeight.w400
+              ),
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(borderRadius))),
         ));
@@ -62,13 +67,18 @@ class LoginState extends State {
 
   Widget passwordField(TextStyle textStyle) {
     return Padding(
-        padding: EdgeInsets.only(top: formPadding, bottom: formPadding),
+        padding: EdgeInsets.only(top: formFieldPadding, bottom: formFieldPadding),
         child: TextField(
           controller: passwordController,
           style: textStyle,
           keyboardType: TextInputType.visiblePassword,
           decoration: InputDecoration(
-              labelText: 'Password',
+              labelText: 'PASSWORD',
+              labelStyle: TextStyle(
+                fontSize: 17.5,
+                letterSpacing: letterSpacing,
+                fontWeight: FontWeight.w400
+              ),
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(borderRadius))),
         ));
@@ -99,6 +109,6 @@ class LoginState extends State {
 
   void navigateToHome() async {
     await Navigator.push(context,
-        MaterialPageRoute(builder: (context) => Home()));
+        MaterialPageRoute(builder: (context) => Nav()));
   }
 }
