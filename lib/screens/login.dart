@@ -1,12 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:goalmine_mobile/screens/home.dart';
 
-class LoginForm extends StatefulWidget {
+class Login extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => LoginFormState();
+  State<StatefulWidget> createState() => LoginState();
 }
 
-class LoginFormState extends State {
+class LoginState extends State {
   final double formPadding = 6.0;
   final double formMargin = 40.0;
   final double borderRadius = 10.0;
@@ -20,18 +20,19 @@ class LoginFormState extends State {
     final TextStyle textStyle = Theme.of(context).textTheme.title;
     final Color primaryColorDark = Theme.of(context).primaryColorDark;
 
-    return Form(
-        child: Container(
-            padding: EdgeInsets.all(20),
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  header(primaryColorDark),
-                  emailField(textStyle),
-                  passwordField(textStyle),
-                  loginButton(primaryColorDark),
-                  Text(credentials)
-                ])));
+    return Scaffold(
+        body: Form(
+            child: Container(
+                padding: EdgeInsets.all(20),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      header(primaryColorDark),
+                      emailField(textStyle),
+                      passwordField(textStyle),
+                      loginButton(primaryColorDark),
+                      Text(credentials)
+                    ]))));
   }
 
   Widget header(Color primaryColorDark) {
@@ -41,8 +42,7 @@ class LoginFormState extends State {
           style: TextStyle(
               fontSize: 50,
               color: primaryColorDark,
-              fontWeight: FontWeight.w300
-          )),
+              fontWeight: FontWeight.w300)),
     );
   }
 
@@ -85,19 +85,20 @@ class LoginFormState extends State {
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(borderRadius)),
             onPressed: () {
-              setState(() {
-                credentials = 'Email: ${emailController.text}, '
-                    'Password: ${passwordController.text}';
-              });
+              print('Email: ${emailController.text}, '
+                  'Password: ${passwordController.text}');
+              navigateToHome();
             },
             child: Text('LOGIN',
               textScaleFactor: 1.3,
-              style: TextStyle(
-                letterSpacing: 2.0,
-                fontWeight: FontWeight.w400
-              ),
+              style: TextStyle(letterSpacing: 2.0, fontWeight: FontWeight.w400),
             ),
       )),
     );
+  }
+
+  void navigateToHome() async {
+    await Navigator.push(context,
+        MaterialPageRoute(builder: (context) => Home()));
   }
 }
