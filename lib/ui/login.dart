@@ -19,7 +19,7 @@ class LoginState extends State {
   @override
   Widget build(BuildContext context) {
     final TextStyle textStyle = Theme.of(context).textTheme.title;
-    final Color primaryColorDark = Theme.of(context).primaryColorDark;
+    final Color primaryColor = Theme.of(context).primaryColor;
 
     return Scaffold(
         body: Form(
@@ -28,10 +28,10 @@ class LoginState extends State {
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      header(primaryColorDark),
+                      header(primaryColor),
                       emailField(textStyle),
                       passwordField(textStyle),
-                      loginButton(primaryColorDark)
+                      loginButton(primaryColor)
                     ]))));
   }
 

@@ -13,16 +13,20 @@ class NavState extends State {
 
   @override
   Widget build(BuildContext context) {
+    final Color primaryColorDark = Theme.of(context).primaryColor;
+
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
-          title: Text('Welcome Back, Jason',
-              style: TextStyle(color: Theme.of(context).primaryColorDark)),
-          automaticallyImplyLeading: false,
-          centerTitle: true,
+          title: Text('GoalMine',
+              style: TextStyle(
+                  color: primaryColorDark,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 25,
+                  letterSpacing: 1.0)),
+          automaticallyImplyLeading: false
         ),
-        body: Center(
-            child: widgetOptions.elementAt(selectedIndex)),
+        body: widgetOptions.elementAt(selectedIndex),
         bottomNavigationBar: BottomNavigationBar(
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
