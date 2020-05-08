@@ -13,14 +13,14 @@ class NavState extends State {
 
   @override
   Widget build(BuildContext context) {
-    final Color primaryColorDark = Theme.of(context).primaryColor;
+    final Color primaryColor = Theme.of(context).primaryColor;
 
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
           title: Text('GoalMine',
               style: TextStyle(
-                  color: primaryColorDark,
+                  color: primaryColor,
                   fontWeight: FontWeight.w400,
                   fontSize: 25,
                   letterSpacing: 1.0)),

@@ -21,26 +21,25 @@ class HomeState extends State {
     return Padding(
         padding: EdgeInsets.only(bottom: 5),
         child: Card(
-            color: Theme.of(context).primaryColor,
             elevation: 5,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10)),
             child: ListTile(
                 contentPadding: EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 15),
-                leading: Icon(Icons.update, size: 30, color: Colors.white),
+                leading: Icon(Icons.update, size: 30, color: Colors.orange),
                 title: Padding(
                     padding: EdgeInsets.only(bottom: 5),
                     child: Text(title,
                         style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
+                            color: Colors.black87,
+                            fontWeight: FontWeight.w500,
                             fontSize: 19))),
                 subtitle: Text(subtitle,
                     style: TextStyle(
-                        color: Colors.white70,
+                        color: Colors.black54,
                         fontWeight: FontWeight.w400,
                         fontSize: 15)),
-                trailing: Icon(Icons.arrow_right, size: 30, color: Colors.white),
+                trailing: Icon(Icons.arrow_right, size: 30, color: Colors.black87),
                 onTap: () {
                   print('$title was tapped');
                 }
