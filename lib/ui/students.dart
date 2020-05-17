@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../data/studentData.dart';
 
 class Students extends StatefulWidget {
   @override
@@ -6,6 +7,14 @@ class Students extends StatefulWidget {
 }
 
 class StudentsState extends State {
+  Future<Objective> futureObjective;
+
+  @override
+  void initState() {
+    super.initState();
+    futureObjective = fetchObjective();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -17,7 +26,8 @@ class StudentsState extends State {
   }
 
   Widget studentCard(String name) {
-    final transparentBorders = Theme.of(context).copyWith(dividerColor: Colors.transparent);
+    final transparentBorders = Theme.of(context).
+                              copyWith(dividerColor: Colors.transparent);
 
     return Padding(
         padding: EdgeInsets.only(bottom: 5),
@@ -37,6 +47,7 @@ class StudentsState extends State {
                                 fontSize: 19)),
                         children: <Widget>[
                           goal("Goal"),
+                          objective("Objective"),
                         ]))
           )));
   }
@@ -54,5 +65,27 @@ class StudentsState extends State {
                   color: Colors.black87
               ),),
           )]);
+  }
+
+  Widget objective(String tempTitle) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.only(left: 17.5, top: 5, bottom: 5),
+          child: FutureBuilder<Objective>(
+            future: futureObjective,
+            builder: (context, snapshot) {
+              if(snapshot.hasData) {
+                return Text(snapshot.data.description);
+              } else if(snapshot.hasError) {
+                return Text("${snapshot.error}");
+              }
+              return Text(tempTitle);
+            },
+          )
+        )
+      ]
+    );
   }
 }
