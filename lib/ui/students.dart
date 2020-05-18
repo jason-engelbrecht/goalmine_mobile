@@ -1,3 +1,6 @@
+import 'dart:developer';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import '../data/studentData.dart';
 
@@ -77,8 +80,11 @@ class StudentsState extends State {
             future: futureObjective,
             builder: (context, snapshot) {
               if(snapshot.hasData) {
-                return Text(snapshot.data.description);
+                debugPrint(snapshot.data.objectiveNum.toString());
+                return Text("snapshot has Data");
+//                return Text(snapshot.data.description);
               } else if(snapshot.hasError) {
+                debugPrint(snapshot.error.toString());
                 return Text("${snapshot.error}");
               }
               return Text(tempTitle);

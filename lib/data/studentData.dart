@@ -1,15 +1,17 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 Future<Objective> fetchObjective() async {
-  final response = await http.get('https://goalmine-api.azurewebsites'
-      '.net/api/objectives/1');
+  final response = await http.get('http://10.0.2.2:3000/api/objectives/1');
 
   if(response.statusCode == 200) {
+    log("response body: " + response.body.toString());
     Map objectiveMap = jsonDecode(response.body);
+    objectiveMap.forEach((k, v) => log('oM: $k: $v'));
+    log("fetch objective: " + objectiveMap.toString());
     return Objective.fromJson(objectiveMap);
   } else {
     throw Exception('Failed to load Objective');
