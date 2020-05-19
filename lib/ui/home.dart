@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:goalmine_mobile/models/parent.dart';
+import 'package:goalmine_mobile/services/parent_service.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -13,6 +15,15 @@ class HomeState extends State {
       children: <Widget>[
         updateCard('Update 1', 'Some details'),
         updateCard('Update 2', 'Some details'),
+        FutureBuilder<Parent>(
+            future: getParent(2),
+            builder: (context, snapshot) {
+              if(snapshot.connectionState == ConnectionState.done)
+                return Text('Username : ${snapshot.data.username}');
+              else
+                return CircularProgressIndicator();
+            }
+        )
       ]
     );
   }
