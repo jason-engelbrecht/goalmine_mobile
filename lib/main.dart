@@ -7,9 +7,9 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Flutter Demo',
+        title: 'GoalMine',
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(primarySwatch: Colors.orange),
+        theme: ThemeData(primarySwatch: Colors.red),
         home: Login());
   }
 }

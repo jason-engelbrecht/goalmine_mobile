@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:goalmine_mobile/ui/home.dart';
+import 'package:goalmine_mobile/ui/goals.dart';
 import 'package:goalmine_mobile/ui/students.dart';
 
 class Nav extends StatefulWidget {
@@ -9,7 +9,7 @@ class Nav extends StatefulWidget {
 
 class NavState extends State {
   int selectedIndex = 0;
-  List<Widget> widgetOptions = <Widget>[Home(), Students()];
+  List<Widget> widgetOptions = <Widget>[Goals(), Students()];
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +30,8 @@ class NavState extends State {
         bottomNavigationBar: BottomNavigationBar(
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                title: Text('Home'),
+                icon: Icon(Icons.timeline),
+                title: Text('Goals'),
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.people),

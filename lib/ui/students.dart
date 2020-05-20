@@ -35,7 +35,7 @@ class StudentsState extends State {
     return Padding(
         padding: EdgeInsets.only(bottom: 5),
         child: Card(
-            elevation: 5,
+            elevation: 2.5,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10)),
             child: Theme(
@@ -43,7 +43,7 @@ class StudentsState extends State {
                 child: Container(
                     padding: EdgeInsets.only(top: 15, bottom: 15, left: 5, right: 10),
                     child: ExpansionTile(
-                        leading: Icon(Icons.person, size: 30, color: Colors.orange),
+                        leading: Icon(Icons.person, size: 30, color: Colors.red),
                         title: Text(name,
                             style: TextStyle(
                                 fontWeight: FontWeight.w500,
