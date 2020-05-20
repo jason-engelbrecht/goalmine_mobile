@@ -3,12 +3,14 @@ import 'package:goalmine_mobile/services/parent_service.dart';
 import 'package:goalmine_mobile/services/student_service.dart';
 import 'package:goalmine_mobile/ui/nav.dart';
 
+//TODO validate login, create parent object and pass it to nav
+
 class Login extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => LoginState();
 }
 
-class LoginState extends State {
+class LoginState extends State<Login> {
   final double formFieldPadding = 6.0;
   final double formMargin = 40.0;
   final double borderRadius = 10.0;

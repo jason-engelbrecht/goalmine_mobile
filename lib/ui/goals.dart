@@ -3,11 +3,16 @@ import 'package:goalmine_mobile/models/parent.dart';
 import 'package:goalmine_mobile/services/parent_service.dart';
 
 class Goals extends StatefulWidget {
+  final Parent parent;
+  const Goals({Key key, this.parent}) : super(key : key);
+
   @override
   State<StatefulWidget> createState() => GoalsState();
 }
 
-class GoalsState extends State {
+class GoalsState extends State<Goals> {
+  //access parent: widget.parent
+
   @override
   Widget build(BuildContext context) {
     return ListView(

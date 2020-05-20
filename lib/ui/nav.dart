@@ -5,13 +5,15 @@ import 'package:goalmine_mobile/ui/goals.dart';
 import 'package:goalmine_mobile/ui/students.dart';
 
 class Nav extends StatefulWidget {
+  final Parent parent;
+  const Nav({Key key, this.parent}) : super(key : key);
+
   @override
   State<StatefulWidget> createState() => NavState();
 }
 
-class NavState extends State {
+class NavState extends State<Nav> {
   int selectedIndex = 0;
-  List<Widget> widgetOptions = <Widget>[Goals(), Students()];
   ParentService parentService = ParentService();
 
   @override
@@ -66,7 +68,9 @@ class NavState extends State {
             ],
           ),
         ),
-        body: widgetOptions.elementAt(selectedIndex),
+        body: <Widget>[Goals(parent: widget.parent),
+                       Students(parent: widget.parent)]
+                          .elementAt(selectedIndex),
         bottomNavigationBar:
             BottomNavigationBar(items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
