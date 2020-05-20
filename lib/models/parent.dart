@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:goalmine_mobile/models/student.dart';
 
 Parent parentFromJson(String str) => Parent.fromJson(json.decode(str));
 
@@ -8,11 +9,13 @@ class Parent {
   int id;
   String username;
   bool isActive;
+  List<Student> students;
 
   Parent({
     this.id,
     this.username,
     this.isActive,
+    //assign students
   });
 
   factory Parent.fromJson(Map<String, dynamic> json) => Parent(

@@ -31,18 +31,19 @@ class LoginState extends State {
                       header(primaryColor),
                       emailField(textStyle),
                       passwordField(textStyle),
-                      loginButton(primaryColor)
+                      loginButton(Colors.red[400])
                     ]))));
   }
 
-  Widget header(Color primaryColorDark) {
+  Widget header(Color primaryColor) {
     return Container(
       margin: EdgeInsets.only(bottom: formMargin),
       child: Text('GoalMine',
           style: TextStyle(
               fontSize: 50,
-              color: primaryColorDark,
-              fontWeight: FontWeight.w300)),
+              color: primaryColor,
+              fontWeight: FontWeight.w400,
+              letterSpacing: 1.0)),
     );
   }
 
@@ -86,7 +87,7 @@ class LoginState extends State {
 
   Widget loginButton(Color buttonColor) {
     return Container(
-      height: 60,
+      height: 57.5,
       margin: EdgeInsets.only(top: formMargin),
       child: SizedBox.expand(
           child: RaisedButton(

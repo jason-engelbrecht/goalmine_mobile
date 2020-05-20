@@ -21,20 +21,13 @@ class GoalsState extends State {
               ])),
           goalCard('Lina will complete 3 digit subtractions by the end of the year'),
           goalCard('Lina will complete 3 digit subtractions by the end of the year'),
-          FutureBuilder<Parent>(
-              future: getParent(2),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.done)
-                  return Text('Username : ${snapshot.data.username}');
-                else
-                  return CircularProgressIndicator();
-              })
         ]);
   }
 
   Widget studentChip(String name, int studentId) => Container(
       margin: EdgeInsets.only(left: 10),
       child: ActionChip(
+        elevation: 2.5,
         avatar: Icon(Icons.check, color: Colors.white),
         label: Text(name, style: TextStyle(color: Colors.white, fontSize: 16)),
         backgroundColor: Colors.red[400],
@@ -55,7 +48,7 @@ class GoalsState extends State {
                 data: transparentBorders,
                 child: Container(
                     padding: EdgeInsets.only(
-                        top: 15, bottom: 15),
+                        top: 15, bottom: 15, left: 5),
                     child: ExpansionTile(
                         title: Text(goal,
                             style: TextStyle(fontWeight: FontWeight.w500)),
@@ -76,30 +69,33 @@ class GoalsState extends State {
                                     child: SingleChildScrollView(
                                         scrollDirection: Axis.horizontal,
                                         child: Row(children: <Widget>[
-                                          objectiveChip('objective 1', 1),
-                                          objectiveChip('objective 1', 1),
-                                          objectiveChip('objective 1', 1)
+                                          objectiveChip('objective', 1),
+                                          objectiveChip('objective', 1),
+                                          objectiveChip('objective', 1)
                                         ])))
                               ])
                         ])))));
   }
 
   Widget type(String type) => ListTile(
-      title: Text(type),
+      title: Text(type, style: TextStyle(fontSize: 15)),
+      dense: true,
       leading: Icon(
         Icons.subject,
         color: Colors.red[300],
       ));
 
   Widget subject(String subject) => ListTile(
-      title: Text(subject),
+      title: Text(subject, style: TextStyle(fontSize: 15)),
+      dense: true,
       leading: Icon(
         Icons.school,
         color: Colors.red[300],
       ));
 
   Widget staff(String staff) => ListTile(
-      title: Text(staff),
+      title: Text(staff, style: TextStyle(fontSize: 15)),
+      dense: true,
       leading: Icon(
         Icons.assignment_ind,
         color: Colors.red[300],
@@ -108,8 +104,10 @@ class GoalsState extends State {
   Widget objectiveChip(String objective, int objectiveId) => Container(
       margin: EdgeInsets.only(left: 10),
       child: ActionChip(
-        avatar: Icon(Icons.check),
+        elevation: 1,
+        avatar: Icon(Icons.access_time, size: 17.5,),
         label: Text(objective),
+        labelPadding: EdgeInsets.only(left: 2.5, right: 5),
         onPressed: () => print(objective),
       ));
 }

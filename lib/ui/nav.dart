@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:goalmine_mobile/models/parent.dart';
+import 'package:goalmine_mobile/services/parent_service.dart';
 import 'package:goalmine_mobile/ui/goals.dart';
 import 'package:goalmine_mobile/ui/students.dart';
 
@@ -10,6 +12,7 @@ class Nav extends StatefulWidget {
 class NavState extends State {
   int selectedIndex = 0;
   List<Widget> widgetOptions = <Widget>[Goals(), Students()];
+  ParentService parentService = ParentService();
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +35,7 @@ class NavState extends State {
             children: <Widget>[
               DrawerHeader(
                   decoration: BoxDecoration(
-                    color: Colors.red,
+                    color: Colors.red[400],
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,13 +50,7 @@ class NavState extends State {
                         ),
                         margin: EdgeInsets.only(bottom: 5),
                       ),
-                      Text('username',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 20,
-                        ),
-                      ),
+                      getUsername(2)
                     ],
                   )),
               SwitchListTile(
@@ -82,6 +79,24 @@ class NavState extends State {
               )
         ], currentIndex: selectedIndex, onTap: onItemTapped));
   }
+
+  FutureBuilder<Parent> getUsername(int id) =>
+      FutureBuilder<Parent>(
+        future: parentService.getParent(id),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done)
+            return Text('${snapshot.data.username}',
+              style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w400,
+              fontSize: 20,
+            ));
+          else
+            return Padding(
+              padding: EdgeInsets.all(10),
+              child: LinearProgressIndicator()
+            ) ;
+        });
 
   void onItemTapped(int index) {
     setState(() {
