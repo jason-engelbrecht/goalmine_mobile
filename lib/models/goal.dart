@@ -16,7 +16,6 @@ class Goal {
   bool paused;
   bool archived;
   bool trials;
-  List<Objective> objectives;
 
   Goal({
     this.id,
@@ -28,7 +27,6 @@ class Goal {
     this.paused,
     this.archived,
     this.trials,
-    //assign objectives
   });
 
   factory Goal.fromJson(Map<String, dynamic> json) => Goal(

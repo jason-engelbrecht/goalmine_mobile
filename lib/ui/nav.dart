@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:goalmine_mobile/models/parent.dart';
-import 'package:goalmine_mobile/services/parent_service.dart';
+import 'package:goalmine_mobile/models/student.dart';
+import 'package:goalmine_mobile/services/student_service.dart';
 import 'package:goalmine_mobile/ui/goals.dart';
 import 'package:goalmine_mobile/ui/students.dart';
 
@@ -14,11 +15,32 @@ class Nav extends StatefulWidget {
 
 class NavState extends State<Nav> {
   int selectedIndex = 0;
-  ParentService parentService = ParentService();
+  StudentService studentService = StudentService();
+  List<Student> students;
+
+  void getStudents() {
+    studentService.getStudents(widget.parent.id).then((newStudents) {
+      setState(() {
+        students = newStudents;
+      });
+    });
+  }
+
+  void createStudents() {
+    if(students == null) {
+      students = List<Student>();
+      getStudents();
+    }
+
+    students.forEach((student) {
+      print(student.firstName);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final Color primaryColor = Theme.of(context).primaryColor;
+    createStudents();
 
     return Scaffold(
         appBar: AppBar(
@@ -52,7 +74,12 @@ class NavState extends State<Nav> {
                         ),
                         margin: EdgeInsets.only(bottom: 5),
                       ),
-                      getUsername(2)
+                      Text(widget.parent.username,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 20,
+                          )),
                     ],
                   )),
               SwitchListTile(
@@ -68,8 +95,8 @@ class NavState extends State<Nav> {
             ],
           ),
         ),
-        body: <Widget>[Goals(parent: widget.parent),
-                       Students(parent: widget.parent)]
+        body: <Widget>[Goals(parent: widget.parent, students: students),
+                       Students(parent: widget.parent, students: students)]
                           .elementAt(selectedIndex),
         bottomNavigationBar:
             BottomNavigationBar(items: <BottomNavigationBarItem>[
@@ -83,24 +110,6 @@ class NavState extends State<Nav> {
               )
         ], currentIndex: selectedIndex, onTap: onItemTapped));
   }
-
-  FutureBuilder<Parent> getUsername(int id) =>
-      FutureBuilder<Parent>(
-        future: parentService.getParent(id),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done)
-            return Text('${snapshot.data.username}',
-              style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w400,
-              fontSize: 20,
-            ));
-          else
-            return Padding(
-              padding: EdgeInsets.all(10),
-              child: LinearProgressIndicator()
-            ) ;
-        });
 
   void onItemTapped(int index) {
     setState(() {

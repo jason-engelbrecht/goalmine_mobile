@@ -1,32 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:goalmine_mobile/models/parent.dart';
-import 'package:goalmine_mobile/services/parent_service.dart';
+import 'package:goalmine_mobile/models/student.dart';
 
 class Goals extends StatefulWidget {
   final Parent parent;
-  const Goals({Key key, this.parent}) : super(key : key);
+  final List<Student> students;
+  const Goals({Key key, this.parent, this.students}) : super(key : key);
 
   @override
   State<StatefulWidget> createState() => GoalsState();
 }
 
 class GoalsState extends State<Goals> {
-  //access parent: widget.parent
-
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    return ListView.builder(
         padding: EdgeInsets.only(top: 10, left: 5, right: 5),
-        children: <Widget>[
-          SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(children: <Widget>[
-                studentChip('My Student', 1),
-                studentChip('Other Student', 1),
-              ])),
-          goalCard('Lina will complete 3 digit subtractions by the end of the year'),
-          goalCard('Lina will complete 3 digit subtractions by the end of the year'),
-        ]);
+        itemCount: widget.students.length,
+        itemBuilder: (BuildContext context, int position) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(children: <Widget>[
+                    studentChip(widget.students[position].firstName, 1),
+                  ])),
+                  goalCard('Lina will complete 3 digit subtractions by the end of the year'),
+                  goalCard('Lina will complete 3 digit subtractions by the end of the year'),
+                ]);
+        });
   }
 
   Widget studentChip(String name, int studentId) => Container(

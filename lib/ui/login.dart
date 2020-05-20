@@ -119,11 +119,14 @@ class LoginState extends State<Login> {
       parentService.authLogin(username, password).then((parentID) {
         if(parentID > 0) {
           parentService.getParent(parentID).then((parent) {
+            print("parent $parentID logging in");
             navigateToHome(parent);
           });
         }
         else {
-          //validation
+          usernameController.text = '';
+          passwordController.text = '';
+          print('invalid login');
         }
       });
     }

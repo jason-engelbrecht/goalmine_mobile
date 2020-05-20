@@ -18,7 +18,6 @@ class Objective {
   bool atOpportunity;
   int frequency;
   String timePeriod;
-  //other stuff
 
   Objective({
     this.id,

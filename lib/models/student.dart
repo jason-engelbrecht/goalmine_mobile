@@ -15,7 +15,6 @@ class Student {
   bool active;
   DateTime birthDate;
   dynamic middleName;
-  List<Goal> goals;
 
   Student({
     this.id,
@@ -26,7 +25,6 @@ class Student {
     this.active,
     this.birthDate,
     this.middleName
-    //assign goals
   });
 
   factory Student.fromJson(Map<String, dynamic> json) => Student(

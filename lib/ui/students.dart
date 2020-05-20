@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:goalmine_mobile/models/parent.dart';
+import 'package:goalmine_mobile/models/student.dart';
 
 class Students extends StatefulWidget {
   final Parent parent;
-  const Students({Key key, this.parent}) : super(key : key);
+  final List<Student> students;
+  const Students({Key key, this.parent, this.students}) : super(key : key);
 
   @override
   State<StatefulWidget> createState() => StudentsState();

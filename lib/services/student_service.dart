@@ -9,9 +9,4 @@ class StudentService {
     final response = await http.get('$url/students/$parentID');
     return studentsFromJson(response.body);
   }
-
-  /*void test() {
-    getStudents(0).then((students) =>
-      students.forEach((student) => print(student.firstName)));
-  }*/
 }
