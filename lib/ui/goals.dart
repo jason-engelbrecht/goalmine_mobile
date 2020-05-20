@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:goalmine_mobile/models/goal.dart';
 import 'package:goalmine_mobile/models/parent.dart';
 import 'package:goalmine_mobile/models/student.dart';
 
 class Goals extends StatefulWidget {
   final Parent parent;
   final List<Student> students;
-  const Goals({Key key, this.parent, this.students}) : super(key : key);
+  final List<Goal> goals;
+  const Goals({Key key, this.parent, this.students, this.goals}) : super(key : key);
 
   @override
   State<StatefulWidget> createState() => GoalsState();
@@ -14,22 +16,29 @@ class Goals extends StatefulWidget {
 class GoalsState extends State<Goals> {
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        padding: EdgeInsets.only(top: 10, left: 5, right: 5),
-        itemCount: widget.students.length,
-        itemBuilder: (BuildContext context, int position) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(children: <Widget>[
-                    studentChip(widget.students[position].firstName, 1),
-                  ])),
-                  goalCard('Lina will complete 3 digit subtractions by the end of the year'),
-                  goalCard('Lina will complete 3 digit subtractions by the end of the year'),
-                ]);
-        });
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        SizedBox(
+          height: 50,
+          child: ListView.builder(
+              padding: EdgeInsets.only(top: 10, left: 5, right: 5),
+              scrollDirection: Axis.horizontal,
+              itemCount: widget.students.length,
+              itemBuilder: (BuildContext context, int position) {
+                return studentChip(widget.students[position].firstName, 1);
+              })
+        ),
+        Expanded(
+          child: ListView.builder(
+            itemCount: widget.goals.length,
+            itemBuilder: (BuildContext context, int position){
+              return goalCard(widget.goals[position]);
+            },
+          ),
+        ),
+      ],
+    );
   }
 
   Widget studentChip(String name, int studentId) => Container(
@@ -42,12 +51,12 @@ class GoalsState extends State<Goals> {
         onPressed: () => print(name),
       ));
 
-  Widget goalCard(String goal) {
+  Widget goalCard(Goal goal) {
     final transparentBorders =
         Theme.of(context).copyWith(dividerColor: Colors.transparent);
 
     return Padding(
-        padding: EdgeInsets.only(bottom: 5, top: 5),
+        padding: EdgeInsets.only(bottom: 5),
         child: Card(
             elevation: 2.5,
             shape:
@@ -58,7 +67,7 @@ class GoalsState extends State<Goals> {
                     padding: EdgeInsets.only(
                         top: 15, bottom: 15, left: 5),
                     child: ExpansionTile(
-                        title: Text(goal,
+                        title: Text(goal.goalDescription,
                             style: TextStyle(fontWeight: FontWeight.w500)),
                         leading: Icon(
                           Icons.assessment,
@@ -68,9 +77,9 @@ class GoalsState extends State<Goals> {
                           Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                type('type'),
-                                subject('subject'),
-                                staff('staff'),
+                                type(goal.goalType),
+                                subject(goal.subject),
+                                staff(goal.staffResponsible),
                                 Container(
                                     padding:
                                         EdgeInsets.only(left: 5, right: 10),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:goalmine_mobile/models/goal.dart';
 import 'package:goalmine_mobile/models/parent.dart';
 import 'package:goalmine_mobile/models/student.dart';
+import 'package:goalmine_mobile/services/goal_service.dart';
 import 'package:goalmine_mobile/services/student_service.dart';
 import 'package:goalmine_mobile/ui/goals.dart';
 import 'package:goalmine_mobile/ui/students.dart';
@@ -16,7 +18,9 @@ class Nav extends StatefulWidget {
 class NavState extends State<Nav> {
   int selectedIndex = 0;
   StudentService studentService = StudentService();
+  GoalService goalService = GoalService();
   List<Student> students;
+  List<Goal> goals;
 
   void getStudents() {
     studentService.getStudents(widget.parent.id).then((newStudents) {
@@ -37,10 +41,29 @@ class NavState extends State<Nav> {
     });
   }
 
+  void getGoals() {
+    goalService.getGoals(1).then((newGoals) {
+      setState(() {
+        goals = newGoals;
+      });
+    });
+  }
+
+  void createGoals() {
+    if(goals == null) {
+      goals = List<Goal>();
+      getGoals();
+    }
+    goals.forEach((goal) {
+      print(goal.goalDescription);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final Color primaryColor = Theme.of(context).primaryColor;
     createStudents();
+    createGoals();
 
     return Scaffold(
         appBar: AppBar(
@@ -95,7 +118,7 @@ class NavState extends State<Nav> {
             ],
           ),
         ),
-        body: <Widget>[Goals(parent: widget.parent, students: students),
+        body: <Widget>[Goals(parent: widget.parent, students: students, goals: goals),
                        Students(parent: widget.parent, students: students)]
                           .elementAt(selectedIndex),
         bottomNavigationBar:
