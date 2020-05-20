@@ -10,8 +10,8 @@ class StudentService {
     return studentsFromJson(response.body);
   }
 
-  void test() {
+  /*void test() {
     getStudents(0).then((students) =>
       students.forEach((student) => print(student.firstName)));
-  }
+  }*/
 }

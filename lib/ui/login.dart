@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:goalmine_mobile/models/parent.dart';
 import 'package:goalmine_mobile/services/parent_service.dart';
 import 'package:goalmine_mobile/services/student_service.dart';
 import 'package:goalmine_mobile/ui/nav.dart';
-
-//TODO validate login, create parent object and pass it to nav
 
 class Login extends StatefulWidget {
   @override
@@ -17,23 +16,14 @@ class LoginState extends State<Login> {
   final double letterSpacing = 2.0;
 
   String credentials = '';
-  TextEditingController emailController = TextEditingController();
+  TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
   ParentService parentService = ParentService();
-  final int parentID = 0;
 
   @override
   Widget build(BuildContext context) {
     final TextStyle textStyle = Theme.of(context).textTheme.title;
-    final Color primaryColor = Theme.of(context).primaryColor;
-
-    parentService.authLogin('tom22', '123456789').then((parentID) {
-      print(parentID);
-    });
-
-    StudentService service = StudentService();
-    service.test();
 
     return Scaffold(
         body: Form(
@@ -42,8 +32,8 @@ class LoginState extends State<Login> {
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      header(primaryColor),
-                      emailField(textStyle),
+                      header(Colors.red[400]),
+                      usernameField(textStyle),
                       passwordField(textStyle),
                       loginButton(Colors.red[400])
                     ]))));
@@ -61,15 +51,15 @@ class LoginState extends State<Login> {
     );
   }
 
-  Widget emailField(TextStyle textStyle) {
+  Widget usernameField(TextStyle textStyle) {
     return Padding(
         padding: EdgeInsets.only(bottom: formFieldPadding),
         child: TextField(
-          controller: emailController,
+          controller: usernameController,
           style: textStyle,
-          keyboardType: TextInputType.emailAddress,
+          keyboardType: TextInputType.text,
           decoration: InputDecoration(
-              labelText: 'EMAIL',
+              labelText: 'USERNAME',
               labelStyle: TextStyle(
                   fontSize: 17.5,
                   letterSpacing: letterSpacing,
@@ -87,6 +77,7 @@ class LoginState extends State<Login> {
           controller: passwordController,
           style: textStyle,
           keyboardType: TextInputType.visiblePassword,
+          obscureText: true,
           decoration: InputDecoration(
               labelText: 'PASSWORD',
               labelStyle: TextStyle(
@@ -110,9 +101,7 @@ class LoginState extends State<Login> {
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(borderRadius)),
             onPressed: () {
-              print('Email: ${emailController.text}, '
-                  'Password: ${passwordController.text}');
-              navigateToHome();
+              login();
             },
             child: Text('LOGIN',
               textScaleFactor: 1.3,
@@ -122,8 +111,31 @@ class LoginState extends State<Login> {
     );
   }
 
-  void navigateToHome() async {
+  void login() {
+    String username = usernameController.text;
+    String password = passwordController.text;
+
+    if(username.isNotEmpty && password.isNotEmpty) {
+      parentService.authLogin(username, password).then((parentID) {
+        if(parentID > 0) {
+          parentService.getParent(parentID).then((parent) {
+            navigateToHome(parent);
+          });
+        }
+        else {
+          //validation
+        }
+      });
+    }
+    else {
+      //validation
+    }
+  }
+
+  void navigateToHome(Parent parent) async {
+    //Parent parent = Parent(id: 1, username: 'g', isActive: true);
+
     await Navigator.push(context,
-        MaterialPageRoute(builder: (context) => Nav()));
+        MaterialPageRoute(builder: (context) => Nav(parent: parent)));
   }
 }
