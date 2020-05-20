@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-List<Objective> objectiveFromJson(String str) => List<Objective>.from(json.decode(str).map((x) => Objective.fromJson(x)));
+List<Objective> objectivesFromJson(String str) => List<Objective>.from(json.decode(str).map((x) => Objective.fromJson(x)));
 
-String objectiveToJson(List<Objective> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String objectivesToJson(List<Objective> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class Objective {
   int id;

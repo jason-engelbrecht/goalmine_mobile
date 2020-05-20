@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:goalmine_mobile/services/parent_service.dart';
+import 'package:goalmine_mobile/services/student_service.dart';
 import 'package:goalmine_mobile/ui/nav.dart';
 
 class Login extends StatefulWidget {
@@ -16,10 +18,20 @@ class LoginState extends State {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+  ParentService parentService = ParentService();
+  final int parentID = 0;
+
   @override
   Widget build(BuildContext context) {
     final TextStyle textStyle = Theme.of(context).textTheme.title;
     final Color primaryColor = Theme.of(context).primaryColor;
+
+    parentService.authLogin('tom22', '123456789').then((parentID) {
+      print(parentID);
+    });
+
+    StudentService service = StudentService();
+    service.test();
 
     return Scaffold(
         body: Form(
