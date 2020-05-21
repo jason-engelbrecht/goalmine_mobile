@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:goalmine_mobile/models/goal.dart';
 import 'package:goalmine_mobile/models/parent.dart';
@@ -16,54 +18,17 @@ class Nav extends StatefulWidget {
 }
 
 class NavState extends State<Nav> {
-  int selectedIndex = 0;
-  StudentService studentService = StudentService();
-  GoalService goalService = GoalService();
-
-  void getStudents() {
-    studentService.getStudents(widget.parent.id).then((students) {
-      setState(() {
-        widget.parent.students = students;
-      });
-    });
-  }
-
-  void createStudents() {
-    if(widget.parent.students == null) {
-      widget.parent.students = List<Student>();
-      getStudents();
-    }
-
-    widget.parent.students.forEach((student) {
-      print(student.firstName);
-    });
-  }
-
-  void getGoals(int id) {
-    goalService.getGoals(id).then((goals) {
-      setState(() {
-        widget.parent.goals = goals;
-      });
-    });
-  }
-
-  void createGoals(int id) {
-    if(widget.parent.goals == null) {
-      widget.parent.goals = List<Goal>();
-      getGoals(id);
-    }
-    widget.parent.goals.forEach((goal) {
-      print(goal.goalDescription);
-    });
-  }
+  int _selectedIndex = 0;
+  StudentService _studentService = StudentService();
+  GoalService _goalService = GoalService();
 
   @override
   Widget build(BuildContext context) {
     final Color primaryColor = Theme.of(context).primaryColor;
 
-    createStudents();
+    _createStudents();
     widget.parent.students.forEach((student) {
-      createGoals(student.id);
+      _createGoals(student.id);
     });
 
     List<Widget> pages = [
@@ -75,6 +40,26 @@ class NavState extends State<Nav> {
           parent: widget.parent,
           students: widget.parent.students)
     ];
+
+    if(widget.parent.students == null ||
+       widget.parent.goals == null) {
+      return Scaffold(
+        body: Container(
+          padding: EdgeInsets.all(25),
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(bottom: 15),
+                  child: Text('GoalMine',
+                      style: TextStyle(
+                      color: primaryColor,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 40,
+                      letterSpacing: 1.0))),
+                LinearProgressIndicator(),
+              ])));
+    }
 
     return Scaffold(
         appBar: AppBar(
@@ -129,7 +114,7 @@ class NavState extends State<Nav> {
             ],
           ),
         ),
-        body: pages.elementAt(selectedIndex),
+        body: pages.elementAt(_selectedIndex),
         bottomNavigationBar:
             BottomNavigationBar(items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
@@ -140,12 +125,42 @@ class NavState extends State<Nav> {
                 icon: Icon(Icons.people),
                 title: Text('Students'),
               )
-        ], currentIndex: selectedIndex, onTap: onItemTapped));
+        ], currentIndex: _selectedIndex, onTap: _onItemTapped));
   }
 
-  void onItemTapped(int index) {
+  void _onItemTapped(int index) {
     setState(() {
-      selectedIndex = index;
+      _selectedIndex = index;
     });
+  }
+
+  void _getStudents() {
+    _studentService.getStudents(widget.parent.id).then((students) {
+      setState(() {
+        widget.parent.students = students;
+      });
+    });
+  }
+
+  void _createStudents() {
+    if(widget.parent.students == null) {
+      widget.parent.students = List<Student>();
+      _getStudents();
+    }
+  }
+
+  void _getGoals(int id) {
+    _goalService.getGoals(id).then((goals) {
+      setState(() {
+        widget.parent.goals.addAll(goals);
+      });
+    });
+  }
+
+  void _createGoals(int id) {
+    if(widget.parent.goals == null) {
+      widget.parent.goals = List<Goal>();
+      _getGoals(id);
+    }
   }
 }
