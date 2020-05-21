@@ -19,42 +19,40 @@ class NavState extends State<Nav> {
   int selectedIndex = 0;
   StudentService studentService = StudentService();
   GoalService goalService = GoalService();
-  List<Student> students;
-  List<Goal> goals;
 
   void getStudents() {
-    studentService.getStudents(widget.parent.id).then((newStudents) {
+    studentService.getStudents(widget.parent.id).then((students) {
       setState(() {
-        students = newStudents;
+        widget.parent.students = students;
       });
     });
   }
 
   void createStudents() {
-    if(students == null) {
-      students = List<Student>();
+    if(widget.parent.students == null) {
+      widget.parent.students = List<Student>();
       getStudents();
     }
 
-    students.forEach((student) {
+    widget.parent.students.forEach((student) {
       print(student.firstName);
     });
   }
 
   void getGoals(int id) {
-    goalService.getGoals(id).then((newGoals) {
+    goalService.getGoals(id).then((goals) {
       setState(() {
-        goals = newGoals;
+        widget.parent.goals = goals;
       });
     });
   }
 
   void createGoals(int id) {
-    if(goals == null) {
-      goals = List<Goal>();
+    if(widget.parent.goals == null) {
+      widget.parent.goals = List<Goal>();
       getGoals(id);
     }
-    goals.forEach((goal) {
+    widget.parent.goals.forEach((goal) {
       print(goal.goalDescription);
     });
   }
@@ -62,10 +60,21 @@ class NavState extends State<Nav> {
   @override
   Widget build(BuildContext context) {
     final Color primaryColor = Theme.of(context).primaryColor;
+
     createStudents();
-    students.forEach((student) {
+    widget.parent.students.forEach((student) {
       createGoals(student.id);
     });
+
+    List<Widget> pages = [
+      Goals(
+          parent: widget.parent,
+          students: widget.parent.students,
+          goals: widget.parent.goals),
+      Students(
+          parent: widget.parent,
+          students: widget.parent.students)
+    ];
 
     return Scaffold(
         appBar: AppBar(
@@ -120,9 +129,7 @@ class NavState extends State<Nav> {
             ],
           ),
         ),
-        body: <Widget>[Goals(parent: widget.parent, students: students, goals: goals),
-                       Students(parent: widget.parent, students: students)]
-                          .elementAt(selectedIndex),
+        body: pages.elementAt(selectedIndex),
         bottomNavigationBar:
             BottomNavigationBar(items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(
