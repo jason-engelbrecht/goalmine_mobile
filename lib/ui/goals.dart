@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:goalmine_mobile/models/goal.dart';
-import 'package:goalmine_mobile/models/parent.dart';
 import 'package:goalmine_mobile/models/student.dart';
 
 class Goals extends StatefulWidget {
-  final Parent parent;
   final List<Student> students;
   final List<Goal> goals;
-  const Goals({Key key, this.parent, this.students, this.goals})
+  const Goals({Key key, this.students, this.goals})
       : super(key: key);
 
   @override
@@ -17,43 +15,42 @@ class Goals extends StatefulWidget {
 class GoalsState extends State<Goals> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        SizedBox(
-            height: 50,
-            child: ListView.builder(
-                padding: EdgeInsets.only(top: 10, left: 5, right: 5),
-                scrollDirection: Axis.horizontal,
-                itemCount: widget.students.length,
-                itemBuilder: (context, int i) {
-                  return studentChip('${widget.students[i].firstName} '
-                        '${widget.students[i].lastName}',
-                         widget.students[i].id);
-                })),
-        Expanded(
+    return Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+      SizedBox(
+          height: 50,
           child: ListView.builder(
-            itemCount: widget.goals.length,
-            itemBuilder: (context, int i) {
-              return goalCard(widget.goals[i]);
-            },
-          ),
-        ),
-      ],
-    );
+              padding: EdgeInsets.only(top: 10, left: 5, right: 5),
+              scrollDirection: Axis.horizontal,
+              itemCount: widget.students.length,
+              itemBuilder: (context, int i) {
+                return _studentChip(widget.students[i]);
+              })),
+      Expanded(
+          child: ListView.builder(
+        itemCount: widget.goals.length,
+        itemBuilder: (context, int i) {
+          return _goalCard(widget.goals[i]);
+        },
+      ))
+    ]);
   }
 
-  Widget studentChip(String name, int studentId) => Container(
-      margin: EdgeInsets.only(left: 10),
-      child: ActionChip(
-        elevation: 2.5,
-        avatar: Icon(Icons.check, color: Colors.white),
-        label: Text(name, style: TextStyle(color: Colors.white, fontSize: 16)),
-        backgroundColor: Colors.red[400],
-        onPressed: () => print(name),
-      ));
+  Widget _studentChip(Student student) {
+    String name = '${student.firstName} ${student.lastName}';
 
-  Widget goalCard(Goal goal) {
+    return Container(
+        margin: EdgeInsets.only(left: 10),
+        child: ActionChip(
+          elevation: 2.5,
+          avatar: Icon(Icons.check, color: Colors.white),
+          label:
+              Text(name, style: TextStyle(color: Colors.white, fontSize: 16)),
+          backgroundColor: Colors.red[400],
+          onPressed: () => print(name),
+        ));
+  }
+
+  Widget _goalCard(Goal goal) {
     final transparentBorders =
         Theme.of(context).copyWith(dividerColor: Colors.transparent);
 
@@ -78,24 +75,24 @@ class GoalsState extends State<Goals> {
                           Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                type(goal.goalType),
-                                subject(goal.subject),
-                                staff(goal.staffResponsible),
+                                _type(goal.goalType),
+                                _subject(goal.subject),
+                                _staff(goal.staffResponsible),
                                 Container(
                                     padding:
                                         EdgeInsets.only(left: 5, right: 10),
                                     child: SingleChildScrollView(
                                         scrollDirection: Axis.horizontal,
                                         child: Row(children: <Widget>[
-                                          objectiveChip('objective', 1),
-                                          objectiveChip('objective', 1),
-                                          objectiveChip('objective', 1)
+                                          _objectiveChip('objective', 1),
+                                          _objectiveChip('objective', 1),
+                                          _objectiveChip('objective', 1)
                                         ])))
                               ])
                         ])))));
   }
 
-  Widget type(String type) => ListTile(
+  Widget _type(String type) => ListTile(
       title: Text(type, style: TextStyle(fontSize: 15)),
       dense: true,
       leading: Icon(
@@ -103,7 +100,7 @@ class GoalsState extends State<Goals> {
         color: Colors.red[300],
       ));
 
-  Widget subject(String subject) => ListTile(
+  Widget _subject(String subject) => ListTile(
       title: Text(subject, style: TextStyle(fontSize: 15)),
       dense: true,
       leading: Icon(
@@ -111,7 +108,7 @@ class GoalsState extends State<Goals> {
         color: Colors.red[300],
       ));
 
-  Widget staff(String staff) => ListTile(
+  Widget _staff(String staff) => ListTile(
       title: Text(staff, style: TextStyle(fontSize: 15)),
       dense: true,
       leading: Icon(
@@ -119,7 +116,7 @@ class GoalsState extends State<Goals> {
         color: Colors.red[300],
       ));
 
-  Widget objectiveChip(String objective, int objectiveId) => Container(
+  Widget _objectiveChip(String objective, int objectiveId) => Container(
       margin: EdgeInsets.only(left: 10),
       child: ActionChip(
         elevation: 1,

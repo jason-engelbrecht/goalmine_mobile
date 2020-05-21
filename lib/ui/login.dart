@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:goalmine_mobile/models/parent.dart';
 import 'package:goalmine_mobile/services/parent_service.dart';
-import 'package:goalmine_mobile/services/student_service.dart';
 import 'package:goalmine_mobile/ui/nav.dart';
 
 class Login extends StatefulWidget {
@@ -10,16 +9,15 @@ class Login extends StatefulWidget {
 }
 
 class LoginState extends State<Login> {
-  final double formFieldPadding = 6.0;
-  final double formMargin = 40.0;
-  final double borderRadius = 10.0;
-  final double letterSpacing = 2.0;
+  final double _formFieldPadding = 6.0;
+  final double _formMargin = 40.0;
+  final double _borderRadius = 10.0;
+  final double _letterSpacing = 2.0;
 
-  String credentials = '';
-  TextEditingController usernameController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  TextEditingController _usernameController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
 
-  ParentService parentService = ParentService();
+  ParentService _parentService = ParentService();
 
   @override
   Widget build(BuildContext context) {
@@ -32,100 +30,89 @@ class LoginState extends State<Login> {
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      header(Colors.red[400]),
-                      usernameField(textStyle),
-                      passwordField(textStyle),
-                      loginButton(Colors.red[400])
+                      _header(Colors.red[400]),
+                      _usernameField(textStyle),
+                      _passwordField(textStyle),
+                      _loginButton(Colors.red[400])
                     ]))));
   }
 
-  Widget header(Color primaryColor) {
-    return Container(
-      margin: EdgeInsets.only(bottom: formMargin),
-      child: Text('GoalMine',
-          style: TextStyle(
-              fontSize: 50,
-              color: primaryColor,
-              fontWeight: FontWeight.w400,
-              letterSpacing: 1.0)),
-    );
-  }
+  Widget _header(Color color) => Container(
+        margin: EdgeInsets.only(bottom: _formMargin),
+        child: Text('GoalMine',
+            style: TextStyle(
+                fontSize: 50,
+                color: color,
+                fontWeight: FontWeight.w400,
+                letterSpacing: 1.0)),
+      );
 
-  Widget usernameField(TextStyle textStyle) {
-    return Padding(
-        padding: EdgeInsets.only(bottom: formFieldPadding),
-        child: TextField(
-          controller: usernameController,
-          style: textStyle,
-          keyboardType: TextInputType.text,
-          decoration: InputDecoration(
-              labelText: 'USERNAME',
-              labelStyle: TextStyle(
-                  fontSize: 17.5,
-                  letterSpacing: letterSpacing,
-                  fontWeight: FontWeight.w400
-              ),
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(borderRadius))),
-        ));
-  }
-
-  Widget passwordField(TextStyle textStyle) {
-    return Padding(
-        padding: EdgeInsets.only(top: formFieldPadding, bottom: formFieldPadding),
-        child: TextField(
-          controller: passwordController,
-          style: textStyle,
-          keyboardType: TextInputType.visiblePassword,
-          obscureText: true,
-          decoration: InputDecoration(
-              labelText: 'PASSWORD',
-              labelStyle: TextStyle(
+  Widget _usernameField(TextStyle textStyle) => Padding(
+      padding: EdgeInsets.only(bottom: _formFieldPadding),
+      child: TextField(
+        controller: _usernameController,
+        style: textStyle,
+        keyboardType: TextInputType.text,
+        decoration: InputDecoration(
+            labelText: 'USERNAME',
+            labelStyle: TextStyle(
                 fontSize: 17.5,
-                letterSpacing: letterSpacing,
-                fontWeight: FontWeight.w400
-              ),
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(borderRadius))),
-        ));
-  }
+                letterSpacing: _letterSpacing,
+                fontWeight: FontWeight.w400),
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(_borderRadius))),
+      ));
 
-  Widget loginButton(Color buttonColor) {
-    return Container(
+  Widget _passwordField(TextStyle textStyle) => Padding(
+      padding:
+          EdgeInsets.only(top: _formFieldPadding, bottom: _formFieldPadding),
+      child: TextField(
+        controller: _passwordController,
+        style: textStyle,
+        keyboardType: TextInputType.visiblePassword,
+        obscureText: true,
+        decoration: InputDecoration(
+            labelText: 'PASSWORD',
+            labelStyle: TextStyle(
+                fontSize: 17.5,
+                letterSpacing: _letterSpacing,
+                fontWeight: FontWeight.w400),
+            border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(_borderRadius))),
+      ));
+
+  Widget _loginButton(Color buttonColor) => Container(
       height: 57.5,
-      margin: EdgeInsets.only(top: formMargin),
+      margin: EdgeInsets.only(top: _formMargin),
       child: SizedBox.expand(
           child: RaisedButton(
             color: buttonColor,
             textColor: Colors.white,
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(borderRadius)),
-            onPressed: () {
-              login();
-            },
-            child: Text('LOGIN',
+                borderRadius: BorderRadius.circular(_borderRadius)),
+            child: Text(
+              'LOGIN',
               textScaleFactor: 1.3,
               style: TextStyle(letterSpacing: 2.0, fontWeight: FontWeight.w400),
             ),
-      )),
-    );
-  }
+            onPressed: () => _login(),
+      )));
 
-  void login() {
-    String username = usernameController.text;
-    String password = passwordController.text;
+  void _login() {
+    String username = _usernameController.text;
+    String password = _passwordController.text;
 
     if(username.isNotEmpty && password.isNotEmpty) {
-      parentService.authLogin(username, password).then((parentID) {
-        if(parentID > 0) {
-          parentService.getParent(parentID).then((parent) {
+      _parentService.authLogin(username, password).then((parentID) {
+        if (parentID > 0) {
+          _parentService.getParent(parentID).then((parent) {
             print("parent $parentID logging in");
-            navigateToHome(parent);
+            _navigateToHome(parent);
           });
         }
         else {
-          usernameController.text = '';
-          passwordController.text = '';
+          _usernameController.text = '';
+          _passwordController.text = '';
           print('invalid login');
         }
       });
@@ -135,10 +122,8 @@ class LoginState extends State<Login> {
     }
   }
 
-  void navigateToHome(Parent parent) async {
-    //Parent parent = Parent(id: 1, username: 'g', isActive: true);
-
-    await Navigator.push(context,
-        MaterialPageRoute(builder: (context) => Nav(parent: parent)));
+  void _navigateToHome(Parent parent) async {
+    await Navigator.push(
+        context, MaterialPageRoute(builder: (context) => Nav(parent: parent)));
   }
 }

@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:goalmine_mobile/models/goal.dart';
-import 'package:goalmine_mobile/models/objective.dart';
 import 'package:goalmine_mobile/models/student.dart';
 
 Parent parentFromJson(String str) => Parent.fromJson(json.decode(str));

@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:goalmine_mobile/models/objective.dart';
+List<Goal> goalsFromJson(String str) =>
+    List<Goal>.from(json.decode(str).map((x) => Goal.fromJson(x)));
 
-List<Goal> goalsFromJson(String str) => List<Goal>.from(json.decode(str).map((x) => Goal.fromJson(x)));
-
-String goalsToJson(List<Goal> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String goalsToJson(List<Goal> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class Goal {
   int id;

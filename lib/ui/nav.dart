@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:goalmine_mobile/models/goal.dart';
 import 'package:goalmine_mobile/models/parent.dart';
@@ -11,7 +9,7 @@ import 'package:goalmine_mobile/ui/students.dart';
 
 class Nav extends StatefulWidget {
   final Parent parent;
-  const Nav({Key key, this.parent}) : super(key : key);
+  const Nav({Key key, this.parent}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => NavState();
@@ -33,7 +31,6 @@ class NavState extends State<Nav> {
 
     List<Widget> pages = [
       Goals(
-          parent: widget.parent,
           students: widget.parent.students,
           goals: widget.parent.goals),
       Students(
@@ -41,24 +38,23 @@ class NavState extends State<Nav> {
           students: widget.parent.students)
     ];
 
-    if(widget.parent.students == null ||
-       widget.parent.goals == null) {
+    if(widget.parent.students == null || widget.parent.goals == null) {
       return Scaffold(
-        body: Container(
-          padding: EdgeInsets.all(25),
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(bottom: 15),
-                  child: Text('GoalMine',
-                      style: TextStyle(
-                      color: primaryColor,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 40,
-                      letterSpacing: 1.0))),
-                LinearProgressIndicator(),
-              ])));
+          body: Container(
+              padding: EdgeInsets.all(25),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Padding(
+                        padding: EdgeInsets.only(bottom: 15),
+                        child: Text('GoalMine',
+                            style: TextStyle(
+                                color: primaryColor,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 40,
+                                letterSpacing: 1.0))),
+                    LinearProgressIndicator(),
+                  ])));
     }
 
     return Scaffold(
@@ -84,7 +80,8 @@ class NavState extends State<Nav> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Container(
-                        child: Text('GoalMine',
+                        child: Text(
+                          'GoalMine',
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w400,
@@ -102,11 +99,10 @@ class NavState extends State<Nav> {
                     ],
                   )),
               SwitchListTile(
-                title: Text('Dark Mode'),
-                value: false,
-                secondary: Icon(Icons.lightbulb_outline),
-                onChanged: (changed) => print('dark mode')
-              ),
+                  title: Text('Dark Mode'),
+                  value: false,
+                  secondary: Icon(Icons.lightbulb_outline),
+                  onChanged: (changed) => print('dark mode')),
               ListTile(
                 leading: Icon(Icons.lock_open),
                 title: Text('Logout'),
@@ -143,7 +139,7 @@ class NavState extends State<Nav> {
   }
 
   void _createStudents() {
-    if(widget.parent.students == null) {
+    if (widget.parent.students == null) {
       widget.parent.students = List<Student>();
       _getStudents();
     }
@@ -158,7 +154,7 @@ class NavState extends State<Nav> {
   }
 
   void _createGoals(int id) {
-    if(widget.parent.goals == null) {
+    if (widget.parent.goals == null) {
       widget.parent.goals = List<Goal>();
       _getGoals(id);
     }
