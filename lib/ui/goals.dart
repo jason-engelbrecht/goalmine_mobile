@@ -7,7 +7,8 @@ class Goals extends StatefulWidget {
   final Parent parent;
   final List<Student> students;
   final List<Goal> goals;
-  const Goals({Key key, this.parent, this.students, this.goals}) : super(key : key);
+  const Goals({Key key, this.parent, this.students, this.goals})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() => GoalsState();
@@ -20,20 +21,21 @@ class GoalsState extends State<Goals> {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         SizedBox(
-          height: 50,
-          child: ListView.builder(
-              padding: EdgeInsets.only(top: 10, left: 5, right: 5),
-              scrollDirection: Axis.horizontal,
-              itemCount: widget.students.length,
-              itemBuilder: (BuildContext context, int position) {
-                return studentChip(widget.students[position].firstName, 1);
-              })
-        ),
+            height: 50,
+            child: ListView.builder(
+                padding: EdgeInsets.only(top: 10, left: 5, right: 5),
+                scrollDirection: Axis.horizontal,
+                itemCount: widget.students.length,
+                itemBuilder: (context, int i) {
+                  return studentChip('${widget.students[i].firstName} '
+                        '${widget.students[i].lastName}',
+                         widget.students[i].id);
+                })),
         Expanded(
           child: ListView.builder(
             itemCount: widget.goals.length,
-            itemBuilder: (BuildContext context, int position){
-              return goalCard(widget.goals[position]);
+            itemBuilder: (context, int i) {
+              return goalCard(widget.goals[i]);
             },
           ),
         ),
@@ -56,7 +58,7 @@ class GoalsState extends State<Goals> {
         Theme.of(context).copyWith(dividerColor: Colors.transparent);
 
     return Padding(
-        padding: EdgeInsets.only(bottom: 5),
+        padding: EdgeInsets.only(top: 5),
         child: Card(
             elevation: 2.5,
             shape:
@@ -64,8 +66,7 @@ class GoalsState extends State<Goals> {
             child: Theme(
                 data: transparentBorders,
                 child: Container(
-                    padding: EdgeInsets.only(
-                        top: 15, bottom: 15, left: 5),
+                    padding: EdgeInsets.only(top: 15, bottom: 15, left: 5),
                     child: ExpansionTile(
                         title: Text(goal.goalDescription,
                             style: TextStyle(fontWeight: FontWeight.w500)),
@@ -122,7 +123,10 @@ class GoalsState extends State<Goals> {
       margin: EdgeInsets.only(left: 10),
       child: ActionChip(
         elevation: 1,
-        avatar: Icon(Icons.access_time, size: 17.5,),
+        avatar: Icon(
+          Icons.access_time,
+          size: 17.5,
+        ),
         label: Text(objective),
         labelPadding: EdgeInsets.only(left: 2.5, right: 5),
         onPressed: () => print(objective),

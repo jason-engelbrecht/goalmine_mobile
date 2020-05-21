@@ -41,18 +41,18 @@ class NavState extends State<Nav> {
     });
   }
 
-  void getGoals() {
-    goalService.getGoals(1).then((newGoals) {
+  void getGoals(int id) {
+    goalService.getGoals(id).then((newGoals) {
       setState(() {
         goals = newGoals;
       });
     });
   }
 
-  void createGoals() {
+  void createGoals(int id) {
     if(goals == null) {
       goals = List<Goal>();
-      getGoals();
+      getGoals(id);
     }
     goals.forEach((goal) {
       print(goal.goalDescription);
@@ -63,7 +63,9 @@ class NavState extends State<Nav> {
   Widget build(BuildContext context) {
     final Color primaryColor = Theme.of(context).primaryColor;
     createStudents();
-    createGoals();
+    students.forEach((student) {
+      createGoals(student.id);
+    });
 
     return Scaffold(
         appBar: AppBar(
@@ -106,9 +108,9 @@ class NavState extends State<Nav> {
                     ],
                   )),
               SwitchListTile(
-                title: const Text('Dark Mode'),
+                title: Text('Dark Mode'),
                 value: false,
-                secondary: const Icon(Icons.lightbulb_outline),
+                secondary: Icon(Icons.lightbulb_outline),
                 onChanged: (changed) => print('dark mode')
               ),
               ListTile(
