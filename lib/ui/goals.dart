@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:goalmine_mobile/models/goal.dart';
+import 'package:goalmine_mobile/models/parent.dart';
 import 'package:goalmine_mobile/models/student.dart';
 
 class Goals extends StatefulWidget {
   final List<Student> students;
   final List<Goal> goals;
-  const Goals({Key key, this.students, this.goals})
+  const Goals({Key key, this.students, this.goals, Parent parent})
       : super(key: key);
 
   @override

@@ -52,7 +52,7 @@ class StudentsState extends State<Students> {
         child: Text(
           goalTitle,
           style: TextStyle(
-              fontSize: 15, fontWeight: FontWeight.w400, color: Colors.black87),
+              fontSize: 15, fontWeight: FontWeight.w400),
         ),
       )
     ]);
