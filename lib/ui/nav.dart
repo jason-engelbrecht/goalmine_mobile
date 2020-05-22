@@ -5,7 +5,6 @@ import 'package:goalmine_mobile/models/student.dart';
 import 'package:goalmine_mobile/services/goal_service.dart';
 import 'package:goalmine_mobile/services/student_service.dart';
 import 'package:goalmine_mobile/ui/goals.dart';
-import 'package:goalmine_mobile/ui/students.dart';
 import 'package:goalmine_mobile/dark_mode/dark_mode.dart';
 import 'package:provider/provider.dart';
 
@@ -18,7 +17,6 @@ class Nav extends StatefulWidget {
 }
 
 class NavState extends State<Nav> {
-  int _selectedIndex = 0;
   StudentService _studentService = StudentService();
   GoalService _goalService = GoalService();
 
@@ -31,15 +29,6 @@ class NavState extends State<Nav> {
     widget.parent.students.forEach((student) {
       _createGoals(student.id);
     });
-
-    List<Widget> pages = [
-      Goals(
-          students: widget.parent.students,
-          goals: widget.parent.goals),
-      Students(
-          parent: widget.parent,
-          students: widget.parent.students)
-    ];
 
     if((widget.parent.students == null || widget.parent.goals == null) ||
        (widget.parent.students.isEmpty || widget.parent.goals.isEmpty)) {
@@ -115,24 +104,8 @@ class NavState extends State<Nav> {
             ],
           ),
         ),
-        body: pages.elementAt(_selectedIndex),
-        bottomNavigationBar:
-        BottomNavigationBar(items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.timeline),
-            title: Text('Goals'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.people),
-            title: Text('Students'),
-          )
-        ], currentIndex: _selectedIndex, onTap: _onItemTapped));
-  }
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+        body: Goals(students: widget.parent.students,
+                    goals: widget.parent.goals));
   }
 
   void _getStudents() {
