@@ -99,16 +99,15 @@ class LoginState extends State<Login> {
       )));
 
   void _login() {
-    String username = _usernameController.text;
-    String password = _passwordController.text;
+    String username = _usernameController.text.trim();
+    String password = _passwordController.text.trim();
 
     if(username.isNotEmpty && password.isNotEmpty) {
-      _parentService.authLogin(username, password).then((parentID) {
-        if (parentID > 0) {
-          _parentService.getParent(parentID).then((parent) {
-            print("parent $parentID logging in");
-            _navigateToHome(parent);
-          });
+
+      _parentService.authLogin(username, password).then((parent) {
+        if(parent != null) {
+          print(parent.toString());
+          _navigateToHome(parent);
         }
         else {
           _usernameController.text = '';
@@ -119,6 +118,7 @@ class LoginState extends State<Login> {
     }
     else {
       //validation
+      print('please enter something');
     }
   }
 

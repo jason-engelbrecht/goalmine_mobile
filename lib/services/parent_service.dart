@@ -11,17 +11,15 @@ class ParentService {
     return parentFromJson(response.body);
   }
 
-  Future<int> authLogin(String username, String password) async {
+  Future<Parent> authLogin(String username, String password) async {
     final response = await http.post('$url/authLogin',
         body: {'username': username,
                'password': password});
 
     if(response.statusCode == 200) {
-      Map<String, dynamic> data = json.decode(response.body);
-      int parentId = data["ID"];
-      return parentId;
+      return parentFromJson(response.body);
     }
-    return -1;
+    return null;
   }
 }
 
