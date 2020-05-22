@@ -103,27 +103,67 @@ class LoginState extends State<Login> {
     String password = _passwordController.text.trim();
 
     if(username.isNotEmpty && password.isNotEmpty) {
-
+      _showLoadingDialog();
       _parentService.authLogin(username, password).then((parent) {
         if(parent != null) {
-          print(parent.toString());
           _navigateToHome(parent);
         }
         else {
-          _usernameController.text = '';
-          _passwordController.text = '';
-          print('invalid login');
+          Navigator.of(context).pop();
+          _showErrorDialog("Invalid Login");
         }
       });
     }
     else {
-      //validation
-      print('please enter something');
+      _showErrorDialog("Please enter something");
     }
   }
 
   void _navigateToHome(Parent parent) async {
     await Navigator.push(
         context, MaterialPageRoute(builder: (context) => Nav(parent: parent)));
+  }
+
+  Future<void> _showErrorDialog(String errorMsg) async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(_borderRadius)),
+          title: SizedBox(
+            height: 200,
+            width: 200,
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                      margin: EdgeInsets.only(bottom: 10),
+                      child: Icon(Icons.error, color: Colors.red, size: 30)),
+                  Text(' $errorMsg',
+                      style: TextStyle(
+                          color: Colors.red,
+                          fontWeight: FontWeight.w400)),
+                ])));
+      },
+    );
+  }
+
+  Future<void> _showLoadingDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(_borderRadius)),
+            title: SizedBox(
+                height: 200,
+                width: 200,
+                child: Center(
+                    child: CircularProgressIndicator()
+                )));
+      },
+    );
   }
 }
