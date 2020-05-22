@@ -41,7 +41,8 @@ class NavState extends State<Nav> {
           students: widget.parent.students)
     ];
 
-    if(widget.parent.students == null || widget.parent.goals == null) {
+    if((widget.parent.students == null || widget.parent.goals == null) ||
+       (widget.parent.students.isEmpty || widget.parent.goals.isEmpty)) {
       return Scaffold(
           body: Container(
               padding: EdgeInsets.all(25),
