@@ -1,12 +1,11 @@
 import 'package:goalmine_mobile/models/goal.dart';
-import 'package:http/http.dart' as http;
+import 'package:goalmine_mobile/services/service.dart';
 import 'dart:async';
 
-class GoalService {
-  final String url = 'https://goalmine-api.azurewebsites.net/api';
+class GoalService extends Service {
 
   Future<List<Goal>> getGoals(int studentID) async {
-    final response = await http.get('$url/goals/$studentID');
+    final response = await client.get('$url/goals/$studentID');
     return goalsFromJson(response.body);
   }
 }

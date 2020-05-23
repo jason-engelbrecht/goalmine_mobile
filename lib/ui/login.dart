@@ -103,13 +103,11 @@ class LoginState extends State<Login> {
     String password = _passwordController.text.trim();
 
     if(username.isNotEmpty && password.isNotEmpty) {
-      _showLoadingDialog();
       _parentService.authLogin(username, password).then((parent) {
         if(parent != null) {
           _navigateToHome(parent);
         }
         else {
-          Navigator.of(context).pop();
           _showErrorDialog("Invalid Login");
         }
       });
@@ -121,7 +119,8 @@ class LoginState extends State<Login> {
 
   void _navigateToHome(Parent parent) async {
     await Navigator.push(
-        context, MaterialPageRoute(builder: (context) => Nav(parent: parent)));
+        context, MaterialPageRoute(
+        builder: (BuildContext context) => Nav(parent: parent)));
   }
 
   Future<void> _showErrorDialog(String errorMsg) async {
@@ -145,24 +144,6 @@ class LoginState extends State<Login> {
                           color: Colors.red,
                           fontWeight: FontWeight.w400)),
                 ])));
-      },
-    );
-  }
-
-  Future<void> _showLoadingDialog() async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(_borderRadius)),
-            title: SizedBox(
-                height: 200,
-                width: 200,
-                child: Center(
-                    child: CircularProgressIndicator()
-                )));
       },
     );
   }

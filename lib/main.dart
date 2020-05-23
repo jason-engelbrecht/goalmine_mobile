@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:goalmine_mobile/services/service.dart';
 import 'package:goalmine_mobile/ui/login.dart';
 import 'package:provider/provider.dart';
 
@@ -14,11 +15,13 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   DarkThemeProvider themeChangeProvider = new DarkThemeProvider();
+  Service service = Service();
 
   @override
   void initState() {
     super.initState();
     getCurrentAppTheme();
+    service.openConnection();
   }
 
   void getCurrentAppTheme() async {
