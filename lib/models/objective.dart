@@ -68,4 +68,9 @@ class Objective {
     "Frequency": frequency,
     "TimePeriod": timePeriod,
   };
+
+  @override
+  String toString() {
+    return 'Objective{id: $id, objectiveNum: $objectiveNum, startDate: $startDate, endDate: $endDate, objectiveDescription: $objectiveDescription, criteria: $criteria, procedure: $procedure, revised: $revised, evidence: $evidence, completed: $completed, atOpportunity: $atOpportunity, frequency: $frequency, timePeriod: $timePeriod}';
+  }
 }

@@ -48,4 +48,9 @@ class Student {
     "BirthDate": birthDate.toIso8601String(),
     "MiddleName": middleName
   };
+
+  @override
+  String toString() {
+    return 'Student{id: $id, firstName: $firstName, lastName: $lastName, schoolDistrict: $schoolDistrict, school: $school, active: $active, birthDate: $birthDate, middleName: $middleName}';
+  }
 }

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:goalmine_mobile/models/goal.dart';
+import 'package:goalmine_mobile/models/objective.dart';
 import 'package:goalmine_mobile/models/parent.dart';
 import 'package:goalmine_mobile/models/student.dart';
 import 'package:goalmine_mobile/services/goal_service.dart';
 import 'package:goalmine_mobile/services/student_service.dart';
+import 'package:goalmine_mobile/services/objective_service.dart';
 import 'package:goalmine_mobile/ui/goals.dart';
 import 'package:goalmine_mobile/dark_mode/dark_mode.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +21,7 @@ class Nav extends StatefulWidget {
 class NavState extends State<Nav> {
   StudentService _studentService = StudentService();
   GoalService _goalService = GoalService();
+  ObjectiveService _objectiveService = ObjectiveService();
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +29,11 @@ class NavState extends State<Nav> {
     final Color primaryColor = Theme.of(context).primaryColor;
 
     _createStudents();
-    widget.parent.students.forEach((student) {
-      _createGoals(student.id);
-    });
+    widget.parent.students.forEach((student) => _createGoals(student.id));
+
+    if(widget.parent.goals != null && widget.parent.goals.isNotEmpty) {
+      widget.parent.goals.forEach((goal) => _createObjectives(goal));
+    }
 
     if((widget.parent.students == null || widget.parent.goals == null) ||
        (widget.parent.students.isEmpty || widget.parent.goals.isEmpty)) {
@@ -109,32 +114,38 @@ class NavState extends State<Nav> {
   }
 
   void _getStudents() {
-    _studentService.getStudents(widget.parent.id).then((students) {
-      setState(() {
-        widget.parent.students = students;
-      });
-    });
+    _studentService.getStudents(widget.parent.id).then((students) =>
+      setState(() => widget.parent.students = students));
   }
 
   void _createStudents() {
-    if (widget.parent.students == null) {
+    if(widget.parent.students == null) {
       widget.parent.students = List<Student>();
       _getStudents();
     }
   }
 
-  void _getGoals(int id) {
-    _goalService.getGoals(id).then((goals) {
-      setState(() {
-        widget.parent.goals.addAll(goals);
-      });
-    });
+  void _getGoals(int studentId) {
+    _goalService.getGoals(studentId).then((goals) =>
+      setState(() => widget.parent.goals.addAll(goals)));
   }
 
-  void _createGoals(int id) {
-    if (widget.parent.goals == null) {
+  void _createGoals(int studentId) {
+    if(widget.parent.goals == null) {
       widget.parent.goals = List<Goal>();
-      _getGoals(id);
+      _getGoals(studentId);
+    }
+  }
+
+  void _getObjectives(Goal goal) {
+    _objectiveService.getObjectives(goal.id).then((objectives) =>
+      setState(() => goal.objectives = objectives));
+  }
+
+  void _createObjectives(Goal goal) {
+    if(goal.objectives == null) {
+      goal.objectives = List<Objective>();
+      _getObjectives(goal);
     }
   }
 }

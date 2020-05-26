@@ -9,4 +9,8 @@ class Service {
     await client.get(url);
     debugPrint('connection established');
   }
+
+  void closeConnection() {
+    client.close();
+  }
 }

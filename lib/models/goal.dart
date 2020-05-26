@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:goalmine_mobile/models/objective.dart';
+
 List<Goal> goalsFromJson(String str) =>
     List<Goal>.from(json.decode(str).map((x) => Goal.fromJson(x)));
 
@@ -16,6 +18,7 @@ class Goal {
   bool paused;
   bool archived;
   bool trials;
+  List<Objective> objectives;
 
   Goal({
     this.id,
@@ -52,4 +55,9 @@ class Goal {
     "Archived": archived,
     "Trials": trials,
   };
+
+  @override
+  String toString() {
+    return 'Goal{id: $id, goalType: $goalType, subject: $subject, staffResponsible: $staffResponsible, goalDescription: $goalDescription, completionDate: $completionDate, paused: $paused, archived: $archived, trials: $trials, objectives: $objectives}';
+  }
 }
