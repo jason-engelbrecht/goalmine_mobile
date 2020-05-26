@@ -23,19 +23,18 @@ class GoalsState extends State<Goals> {
               scrollDirection: Axis.horizontal,
               itemCount: widget.students.length,
               itemBuilder: (context, int i) {
-                return _studentChip(widget.students[i]);
+                return _buildStudentChip(widget.students[i]);
               })),
       Expanded(
           child: ListView.builder(
-        itemCount: widget.goals.length,
-        itemBuilder: (context, int i) {
-          return _goalCard(widget.goals[i]);
-        },
-      ))
+              itemCount: widget.goals.length,
+              itemBuilder: (context, int i) {
+                return _buildGoalCard(widget.goals[i]);
+              }))
     ]);
   }
 
-  Widget _studentChip(Student student) {
+  Widget _buildStudentChip(Student student) {
     String name = '${student.firstName} ${student.lastName}';
 
     return Container(
@@ -50,7 +49,7 @@ class GoalsState extends State<Goals> {
         ));
   }
 
-  Widget _goalCard(Goal goal) {
+  Widget _buildGoalCard(Goal goal) {
     final transparentBorders =
         Theme.of(context).copyWith(dividerColor: Colors.transparent);
 
@@ -75,57 +74,33 @@ class GoalsState extends State<Goals> {
                           Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                _type(goal.goalType),
-                                _subject(goal.subject),
-                                _staff(goal.staffResponsible),
+                                _buildGoalInfoTile(Icons.subject, goal.goalType),
+                                _buildGoalInfoTile(Icons.school, goal.subject),
+                                _buildGoalInfoTile(Icons.assignment_ind, goal.staffResponsible),
                                 Container(
                                     padding:
                                         EdgeInsets.only(left: 5, right: 10),
                                     child: SingleChildScrollView(
                                         scrollDirection: Axis.horizontal,
                                         child: Row(children: <Widget>[
-                                          _objectiveChip('objective', 1),
-                                          _objectiveChip('objective', 1),
-                                          _objectiveChip('objective', 1)
+                                          _buildObjectiveChip('objective', 1),
+                                          _buildObjectiveChip('objective', 1),
+                                          _buildObjectiveChip('objective', 1)
                                         ])))
                               ])
                         ])))));
   }
 
-  Widget _type(String type) => ListTile(
-      title: Text(type, style: TextStyle(fontSize: 15)),
-      dense: true,
-      leading: Icon(
-        Icons.subject,
-        color: Colors.red[300],
-      ));
+  Widget _buildGoalInfoTile(IconData icon, String text) => ListTile(
+      title: Text(text, style: TextStyle(fontSize: 15)),
+      dense: true, leading: Icon(icon, color: Colors.red[300]));
 
-  Widget _subject(String subject) => ListTile(
-      title: Text(subject, style: TextStyle(fontSize: 15)),
-      dense: true,
-      leading: Icon(
-        Icons.school,
-        color: Colors.red[300],
-      ));
-
-  Widget _staff(String staff) => ListTile(
-      title: Text(staff, style: TextStyle(fontSize: 15)),
-      dense: true,
-      leading: Icon(
-        Icons.assignment_ind,
-        color: Colors.red[300],
-      ));
-
-  Widget _objectiveChip(String objective, int objectiveId) => Container(
+  Widget _buildObjectiveChip(String objective, int objectiveId) => Container(
       margin: EdgeInsets.only(left: 10),
       child: ActionChip(
         elevation: 1,
-        avatar: Icon(
-          Icons.access_time,
-          size: 17.5,
-        ),
+        avatar: Icon(Icons.access_time, size: 17.5),
         label: Text(objective),
         labelPadding: EdgeInsets.only(left: 2.5, right: 5),
-        onPressed: () => print(objective),
-      ));
+        onPressed: () => print(objective)));
 }
