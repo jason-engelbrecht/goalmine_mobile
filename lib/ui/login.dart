@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:goalmine_mobile/models/parent.dart';
 import 'package:goalmine_mobile/services/parent_service.dart';
 import 'package:goalmine_mobile/ui/nav.dart';
+import 'package:goalmine_mobile/ui/loading_screen.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -18,10 +19,15 @@ class LoginState extends State<Login> {
   TextEditingController _passwordController = TextEditingController();
 
   ParentService _parentService = ParentService();
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
     final TextStyle textStyle = Theme.of(context).textTheme.title;
+
+    if(isLoading) {
+      return LoadingScreen();
+    }
 
     return Scaffold(
         body: Form(
@@ -103,11 +109,13 @@ class LoginState extends State<Login> {
     String password = _passwordController.text.trim();
 
     if(username.isNotEmpty && password.isNotEmpty) {
+      setState(() => isLoading = true);
       _parentService.authLogin(username, password).then((parent) {
         if(parent != null) {
           _navigateToHome(parent);
         }
         else {
+          setState(() => isLoading = false);
           _showErrorDialog("Invalid Login");
         }
       });

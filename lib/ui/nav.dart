@@ -7,6 +7,7 @@ import 'package:goalmine_mobile/services/goal_service.dart';
 import 'package:goalmine_mobile/services/student_service.dart';
 import 'package:goalmine_mobile/services/objective_service.dart';
 import 'package:goalmine_mobile/ui/goals.dart';
+import 'package:goalmine_mobile/ui/loading_screen.dart';
 import 'package:goalmine_mobile/dark_mode/dark_mode.dart';
 import 'package:provider/provider.dart';
 
@@ -35,24 +36,12 @@ class NavState extends State<Nav> {
       widget.parent.goals.forEach((goal) => _createObjectives(goal));
     }
 
-    if((widget.parent.students == null || widget.parent.goals == null) ||
-       (widget.parent.students.isEmpty || widget.parent.goals.isEmpty)) {
-      return Scaffold(
-          body: Container(
-              padding: EdgeInsets.all(25),
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Padding(
-                        padding: EdgeInsets.only(bottom: 15),
-                        child: Text('GoalMine',
-                            style: TextStyle(
-                                color: primaryColor,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 40,
-                                letterSpacing: 1.0))),
-                    LinearProgressIndicator(),
-                  ])));
+    bool isLoading =
+        (widget.parent.students == null || widget.parent.goals == null) ||
+        (widget.parent.students.isEmpty || widget.parent.goals.isEmpty);
+
+    if(isLoading) {
+      return LoadingScreen();
     }
 
     return Scaffold(
