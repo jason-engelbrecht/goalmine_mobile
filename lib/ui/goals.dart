@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:goalmine_mobile/models/goal.dart';
+import 'package:goalmine_mobile/models/objective.dart';
 import 'package:goalmine_mobile/models/student.dart';
 
 class Goals extends StatefulWidget {
@@ -77,16 +78,15 @@ class GoalsState extends State<Goals> {
                                 _buildGoalInfoTile(Icons.subject, goal.goalType),
                                 _buildGoalInfoTile(Icons.school, goal.subject),
                                 _buildGoalInfoTile(Icons.assignment_ind, goal.staffResponsible),
-                                Container(
-                                    padding:
-                                        EdgeInsets.only(left: 5, right: 10),
-                                    child: SingleChildScrollView(
+                                SizedBox(
+                                  height: 50,
+                                    child: ListView.builder(
+                                        padding: EdgeInsets.only(left: 5, right: 5),
                                         scrollDirection: Axis.horizontal,
-                                        child: Row(children: <Widget>[
-                                          _buildObjectiveChip('objective', 1),
-                                          _buildObjectiveChip('objective', 1),
-                                          _buildObjectiveChip('objective', 1)
-                                        ])))
+                                        itemCount: goal.objectives.length,
+                                        itemBuilder: (context, int i) {
+                                          return _buildObjectiveChip(goal.objectives[i]);
+                                        }))
                               ])
                         ])))));
   }
@@ -95,12 +95,15 @@ class GoalsState extends State<Goals> {
       title: Text(text, style: TextStyle(fontSize: 15)),
       dense: true, leading: Icon(icon, color: Colors.red[300]));
 
-  Widget _buildObjectiveChip(String objective, int objectiveId) => Container(
-      margin: EdgeInsets.only(left: 10),
-      child: ActionChip(
-        elevation: 1,
-        avatar: Icon(Icons.access_time, size: 17.5),
-        label: Text(objective),
-        labelPadding: EdgeInsets.only(left: 2.5, right: 5),
-        onPressed: () => print(objective)));
+  Widget _buildObjectiveChip(Objective objective) {
+    return Container(
+        margin: EdgeInsets.only(left: 10),
+        child: ActionChip(
+            elevation: 1,
+            avatar: Icon(Icons.access_time, size: 17.5),
+            label: Text("objective ${objective.objectiveNum}"),
+            labelPadding: EdgeInsets.only(left: 2.5, right: 5),
+            onPressed: () => print(objective)));
+            //TODO send objective to an objective page
+  }
 }
