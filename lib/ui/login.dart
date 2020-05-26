@@ -14,6 +14,7 @@ class LoginState extends State<Login> {
   final double _formMargin = 40.0;
   final double _borderRadius = 10.0;
   final double _letterSpacing = 2.0;
+  final primaryColor = Colors.red[400];
 
   TextEditingController _usernameController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
@@ -36,24 +37,24 @@ class LoginState extends State<Login> {
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      _header(Colors.red[400]),
-                      _usernameField(textStyle),
-                      _passwordField(textStyle),
-                      _loginButton(Colors.red[400])
+                      _buildHeader(),
+                      _buildUsernameField(textStyle),
+                      _buildPasswordField(textStyle),
+                      _buildLoginButton()
                     ]))));
   }
 
-  Widget _header(Color color) => Container(
+  Widget _buildHeader() => Container(
         margin: EdgeInsets.only(bottom: _formMargin),
         child: Text('GoalMine',
             style: TextStyle(
                 fontSize: 50,
-                color: color,
+                color: primaryColor,
                 fontWeight: FontWeight.w400,
                 letterSpacing: 1.0)),
       );
 
-  Widget _usernameField(TextStyle textStyle) => Padding(
+  Widget _buildUsernameField(TextStyle textStyle) => Padding(
       padding: EdgeInsets.only(bottom: _formFieldPadding),
       child: TextField(
         controller: _usernameController,
@@ -69,7 +70,7 @@ class LoginState extends State<Login> {
                 borderRadius: BorderRadius.circular(_borderRadius))),
       ));
 
-  Widget _passwordField(TextStyle textStyle) => Padding(
+  Widget _buildPasswordField(TextStyle textStyle) => Padding(
       padding:
           EdgeInsets.only(top: _formFieldPadding, bottom: _formFieldPadding),
       child: TextField(
@@ -87,12 +88,12 @@ class LoginState extends State<Login> {
                 borderRadius: BorderRadius.circular(_borderRadius))),
       ));
 
-  Widget _loginButton(Color buttonColor) => Container(
+  Widget _buildLoginButton() => Container(
       height: 57.5,
       margin: EdgeInsets.only(top: _formMargin),
       child: SizedBox.expand(
           child: RaisedButton(
-            color: buttonColor,
+            color: primaryColor,
             textColor: Colors.white,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(_borderRadius)),
@@ -116,12 +117,12 @@ class LoginState extends State<Login> {
         }
         else {
           setState(() => isLoading = false);
-          _showErrorDialog("Invalid Login");
+          _showErrorDialog("Username and password did not match.");
         }
       });
     }
     else {
-      _showErrorDialog("Please enter something");
+      _showErrorDialog("Please enter something.");
     }
   }
 
@@ -136,22 +137,10 @@ class LoginState extends State<Login> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          title: Text('Invalid Login'),
+          content: Text(errorMsg, style: TextStyle(fontSize: 17.5)),
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(_borderRadius)),
-          title: SizedBox(
-            height: 200,
-            width: 200,
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                      margin: EdgeInsets.only(bottom: 10),
-                      child: Icon(Icons.error, color: Colors.red, size: 30)),
-                  Text(' $errorMsg',
-                      style: TextStyle(
-                          color: Colors.red,
-                          fontWeight: FontWeight.w400)),
-                ])));
+              borderRadius: BorderRadius.circular(_borderRadius)));
       },
     );
   }
