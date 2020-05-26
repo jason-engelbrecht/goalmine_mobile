@@ -128,8 +128,9 @@ class LoginState extends State<Login> {
 
   void _navigateToHome(Parent parent) async {
     await Navigator.push(
-        context, MaterialPageRoute(
-        builder: (BuildContext context) => Nav(parent: parent)));
+        context, PageRouteBuilder(
+        transitionDuration: Duration(seconds: 0),
+        pageBuilder: (context, animation, animation2) => Nav(parent: parent)));
   }
 
   Future<void> _showErrorDialog(String errorMsg) async {
