@@ -44,62 +44,66 @@ class NavState extends State<Nav> {
       return LoadingScreen();
     }
 
-    return Scaffold(
-        appBar: AppBar(
-          iconTheme: new IconThemeData(color: Colors.red),
-          title: Text('GoalMine',
-              style: TextStyle(
-                  color: primaryColor,
-                  fontWeight: FontWeight.w400,
-                  fontSize: 25,
-                  letterSpacing: 1.0)),
-        ),
-        drawer: Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: <Widget>[
-              DrawerHeader(
-                  decoration: BoxDecoration(
-                    color: Colors.red[400],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Container(
-                        child: Text(
-                          'GoalMine',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w400,
-                              fontSize: 25,
-                              letterSpacing: 1.0),
-                        ),
-                        margin: EdgeInsets.only(bottom: 5),
+    return WillPopScope(
+        onWillPop: () async {
+          return false;
+        },
+        child: Scaffold(
+            appBar: AppBar(
+              iconTheme: new IconThemeData(color: Colors.red),
+              title: Text('GoalMine',
+                  style: TextStyle(
+                      color: primaryColor,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 25,
+                      letterSpacing: 1.0)),
+            ),
+            drawer: Drawer(
+              child: ListView(
+                padding: EdgeInsets.zero,
+                children: <Widget>[
+                  DrawerHeader(
+                      decoration: BoxDecoration(
+                        color: Colors.red[400],
                       ),
-                      Text(widget.parent.username,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 20,
-                          )),
-                    ],
-                  )),
-              SwitchListTile(
-                  title: const Text('Dark Mode'),
-                  value: themeChange.darkTheme,
-                  secondary: const Icon(Icons.lightbulb_outline),
-                  onChanged: (bool value) {
-                    themeChange.darkTheme = value;
-                  }),
-              ListTile(
-                leading: Icon(Icons.lock_open),
-                title: Text('Logout'),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            child: Text(
+                              'GoalMine',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 25,
+                                  letterSpacing: 1.0),
+                            ),
+                            margin: EdgeInsets.only(bottom: 5),
+                          ),
+                          Text(widget.parent.username,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 20,
+                              )),
+                        ],
+                      )),
+                  SwitchListTile(
+                      title: const Text('Dark Mode'),
+                      value: themeChange.darkTheme,
+                      secondary: const Icon(Icons.lightbulb_outline),
+                      onChanged: (bool value) {
+                        themeChange.darkTheme = value;
+                      }),
+                  ListTile(
+                    leading: Icon(Icons.lock_open),
+                    title: Text('Logout'),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
-        body: Goals(students: widget.parent.students,
-                    goals: widget.parent.goals));
+            ),
+          body: Goals(students: widget.parent.students,
+                    goals: widget.parent.goals)));
   }
 
   void _getStudents() {
@@ -136,5 +140,18 @@ class NavState extends State<Nav> {
       goal.objectives = List<Objective>();
       _getObjectives(goal);
     }
+  }
+
+  Future<void> _showErrorDialog(String errorMsg) async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+            title: Text('Invalid Login'),
+            content: Text(errorMsg, style: TextStyle(fontSize: 17.5)),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10)));
+      },
+    );
   }
 }
