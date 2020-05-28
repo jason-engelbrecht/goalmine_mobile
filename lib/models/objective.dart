@@ -1,5 +1,9 @@
 import 'dart:convert';
 
+import 'package:goalmine_mobile/models/evidence.dart';
+import 'package:goalmine_mobile/models/note.dart';
+import 'package:goalmine_mobile/models/score.dart';
+
 List<Objective> objectivesFromJson(String str) =>
     List<Objective>.from(json.decode(str).map((x) => Objective.fromJson(x)));
 
@@ -20,6 +24,8 @@ class Objective {
   bool atOpportunity;
   int frequency;
   String timePeriod;
+  List<Score> scores = new List();
+  List<Note> notes = new List();
 
   Objective({
     this.id,
