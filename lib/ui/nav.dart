@@ -141,17 +141,4 @@ class NavState extends State<Nav> {
       _getObjectives(goal);
     }
   }
-
-  Future<void> _showErrorDialog(String errorMsg) async {
-    return showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-            title: Text('Invalid Login'),
-            content: Text(errorMsg, style: TextStyle(fontSize: 17.5)),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10)));
-      },
-    );
-  }
 }
