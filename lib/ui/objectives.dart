@@ -180,7 +180,7 @@ class ObjectiveState extends State<Objectives> {
   }
 
   Widget _buildInfoTile(IconData icon, String text) => ListTile(
-      contentPadding: EdgeInsets.only(left: 25),
+      contentPadding: EdgeInsets.only(left: 18),
       title: Text(text, style: TextStyle(fontSize: 13)),
       dense: true, leading: Icon(icon, color: Colors.red[300], size: 15,));
 }
