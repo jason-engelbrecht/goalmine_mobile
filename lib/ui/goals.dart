@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:goalmine_mobile/models/goal.dart';
 import 'package:goalmine_mobile/models/objective.dart';
+import 'package:goalmine_mobile/models/parent.dart';
 import 'package:goalmine_mobile/models/student.dart';
+import 'package:goalmine_mobile/ui/objectives.dart';
 
 class Goals extends StatefulWidget {
   final List<Student> students;
   final List<Goal> goals;
-  const Goals({Key key, this.students, this.goals})
+  final Parent parent;
+  const Goals({Key key, this.students, this.goals, this.parent})
       : super(key: key);
 
   @override
@@ -103,7 +106,12 @@ class GoalsState extends State<Goals> {
             avatar: Icon(Icons.access_time, size: 17.5),
             label: Text("objective ${objective.objectiveNum}"),
             labelPadding: EdgeInsets.only(left: 2.5, right: 5),
-            onPressed: () => print(objective)));
+            onPressed: () => {
+              Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) =>
+                  Objectives(objective: objective, parent: widget.parent,)),
+              )}));
             //TODO send objective to an objective page
   }
 }
