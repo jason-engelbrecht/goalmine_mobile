@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:goalmine_mobile/services/evidence_service.dart';
 import 'package:goalmine_mobile/services/note_service.dart';
 import 'package:goalmine_mobile/models/objective.dart';
 import 'package:goalmine_mobile/models/parent.dart';
@@ -20,14 +21,12 @@ class Objectives extends StatefulWidget {
 
 class ObjectiveState extends State<Objectives> {
   NoteService _noteService = NoteService();
+  EvidenceService _evidenceService = EvidenceService();
 
   @override
   Widget build(BuildContext context) {
     final themeChange = Provider.of<DarkThemeProvider>(context);
     final Color primaryColor = Theme.of(context).primaryColor;
-
-    _buildNotes();
-    _buildEvidence();
 
     return Scaffold(
         appBar: AppBar(
@@ -85,50 +84,103 @@ class ObjectiveState extends State<Objectives> {
         ),
         body: ListView (
           children: <Widget>[
-            _buildObjective(widget.objective),
-            _buildNotes(),
-            _buildEvidence()
+            _buildObjectiveCard(widget.objective),
+            _buildNoteCard(),
+            _buildEvidenceCard()
           ],
         ));
   }
 
-  Widget _buildObjective(Objective objective) {
-    String description = 'Objective ' + '${objective.objectiveNum}' + ': \n' +
-        '${objective.objectiveDescription}';
+  Widget _buildObjectiveCard(Objective objective) {
+    final transparentBorders =
+    Theme.of(context).copyWith(dividerColor: Colors.transparent);
 
-    return Container(
-      margin: EdgeInsets.fromLTRB(0, 0, 0, 5),
-      child: Container(
-          child: Text(description, style: TextStyle(color: Colors.white, fontSize: 16)),
-          color: Colors.redAccent,
-          padding: EdgeInsets.all(15),
-        ),
-    );
+    return Padding(
+        padding: EdgeInsets.only(top: 5),
+        child: Card(
+            elevation: 2.5,
+            shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            child: Theme(
+                data: transparentBorders,
+                child: Container(
+                    padding: EdgeInsets.only(top: 15, bottom: 15, left: 5),
+                    child: ListTile(
+                        title: Text('Objective ' + '${objective.objectiveNum}'
+                            + ': \n',
+                            style: TextStyle(fontWeight: FontWeight.w500)),
+                        subtitle: Text('${objective.objectiveDescription}'),
+                        leading: Icon(
+                          Icons.assessment,
+                          color: Colors.red[400],
+                        ),
+                        )))));
   }
 
-  Widget _buildNotes() {
-    String description = 'Notes: \n';
+  Widget _buildNoteCard() {
+    final transparentBorders =
+    Theme.of(context).copyWith(dividerColor: Colors.transparent);
 
-    return Container(
-        margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
-        child: Container(
-          child: Text(description, style: TextStyle(color: Colors.white, fontSize: 16)),
-          color: Colors.redAccent,
-          padding: EdgeInsets.all(15),
-        )
-    );
+    return Padding(
+        padding: EdgeInsets.only(top: 5),
+        child: Card(
+            elevation: 2.5,
+            shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            child: Theme(
+                data: transparentBorders,
+                child: Container(
+                    padding: EdgeInsets.only(top: 15, bottom: 15, left: 5),
+                    child: ExpansionTile(
+                      title: Text('Notes',
+                          style: TextStyle(fontWeight: FontWeight.w500)),
+                      leading: Icon(
+                        Icons.assignment,
+                        color: Colors.red[400],
+                      ),
+                      children: <Widget>[
+                        Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _buildInfoTile(Icons.arrow_right, 'Note 1'),
+                              _buildInfoTile(Icons.arrow_right, 'Note 2'),
+                            ])
+                      ])))));
   }
 
-  Widget _buildEvidence() {
-    String description = 'Evidence: \n';
+  Widget _buildEvidenceCard() {
+    final transparentBorders =
+    Theme.of(context).copyWith(dividerColor: Colors.transparent);
 
-    return Container(
-        margin: EdgeInsets.fromLTRB(0, 5, 0, 5),
-        child: Container(
-          child: Text(description, style: TextStyle(color: Colors.white, fontSize: 16)),
-          color: Colors.redAccent,
-          padding: EdgeInsets.all(15),
-        )
-    );
+    return Padding(
+        padding: EdgeInsets.only(top: 5),
+        child: Card(
+            elevation: 2.5,
+            shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            child: Theme(
+                data: transparentBorders,
+                child: Container(
+                    padding: EdgeInsets.only(top: 15, bottom: 15, left: 5),
+                    child: ExpansionTile(
+                      title: Text('Evidence',
+                          style: TextStyle(fontWeight: FontWeight.w500)),
+                      leading: Icon(
+                        Icons.search,
+                        color: Colors.red[400],
+                      ),
+                      children: <Widget>[
+                        Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _buildInfoTile(Icons.check, 'Evidence 1'),
+                              _buildInfoTile(Icons.check, 'Evidence 2'),
+                            ])
+                      ])))));
   }
+
+  Widget _buildInfoTile(IconData icon, String text) => ListTile(
+      contentPadding: EdgeInsets.only(left: 25),
+      title: Text(text, style: TextStyle(fontSize: 13)),
+      dense: true, leading: Icon(icon, color: Colors.red[300], size: 15,));
 }
