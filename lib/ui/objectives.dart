@@ -6,6 +6,7 @@ import 'package:goalmine_mobile/models/objective.dart';
 import 'package:goalmine_mobile/models/parent.dart';
 import 'package:goalmine_mobile/models/note.dart';
 import 'package:goalmine_mobile/dark_mode/dark_mode.dart';
+import 'package:goalmine_mobile/services/score_service.dart';
 import 'package:provider/provider.dart';
 
 class Objectives extends StatefulWidget {
@@ -21,12 +22,15 @@ class Objectives extends StatefulWidget {
 
 class ObjectiveState extends State<Objectives> {
   NoteService _noteService = NoteService();
-  EvidenceService _evidenceService = EvidenceService();
+  ScoreService _scoreService = ScoreService();
 
   @override
   Widget build(BuildContext context) {
     final themeChange = Provider.of<DarkThemeProvider>(context);
     final Color primaryColor = Theme.of(context).primaryColor;
+
+    _getScores();
+    _getNotes();
 
     return Scaffold(
         appBar: AppBar(
@@ -85,8 +89,8 @@ class ObjectiveState extends State<Objectives> {
         body: ListView (
           children: <Widget>[
             _buildObjectiveCard(widget.objective),
+            _buildScoreCard(),
             _buildNoteCard(),
-            _buildEvidenceCard()
           ],
         ));
   }
@@ -111,7 +115,7 @@ class ObjectiveState extends State<Objectives> {
                             style: TextStyle(fontWeight: FontWeight.w500)),
                         subtitle: Text('${objective.objectiveDescription}'),
                         leading: Icon(
-                          Icons.assessment,
+                          Icons.assignment_turned_in,
                           color: Colors.red[400],
                         ),
                         )))));
@@ -141,14 +145,13 @@ class ObjectiveState extends State<Objectives> {
                       children: <Widget>[
                         Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              _buildInfoTile(Icons.arrow_right, 'Note 1'),
-                              _buildInfoTile(Icons.arrow_right, 'Note 2'),
-                            ])
-                      ])))));
+                            children: List.generate(widget.objective.notes.length,
+                                    (index) => _buildInfoTile(Icons.arrow_right,
+                                    widget.objective.notes[index].text))
+                        )])))));
   }
 
-  Widget _buildEvidenceCard() {
+  Widget _buildScoreCard() {
     final transparentBorders =
     Theme.of(context).copyWith(dividerColor: Colors.transparent);
 
@@ -163,19 +166,19 @@ class ObjectiveState extends State<Objectives> {
                 child: Container(
                     padding: EdgeInsets.only(top: 15, bottom: 15, left: 5),
                     child: ExpansionTile(
-                      title: Text('Evidence',
+                      title: Text('Scores',
                           style: TextStyle(fontWeight: FontWeight.w500)),
                       leading: Icon(
-                        Icons.search,
+                        Icons.assessment,
                         color: Colors.red[400],
                       ),
                       children: <Widget>[
                         Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              _buildInfoTile(Icons.check, 'Evidence 1'),
-                              _buildInfoTile(Icons.check, 'Evidence 2'),
-                            ])
+
+                            ]) //CHANGE HERE
+
                       ])))));
   }
 
@@ -183,4 +186,15 @@ class ObjectiveState extends State<Objectives> {
       contentPadding: EdgeInsets.only(left: 18),
       title: Text(text, style: TextStyle(fontSize: 13)),
       dense: true, leading: Icon(icon, color: Colors.red[300], size: 15,));
+
+  void _getNotes() {
+    _noteService.getNotes(widget.objective.id).then((notes) =>
+    setState(() => widget.objective.notes = notes));
+  }
+
+  void _getScores() {
+    _scoreService.getScores(widget.objective.id).then((scores) =>
+        setState(() => widget.objective.scores = scores));
+  }
+
 }
