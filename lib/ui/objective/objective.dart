@@ -5,6 +5,7 @@ import 'package:goalmine_mobile/models/objective/objective.dart';
 import 'package:goalmine_mobile/models/objective/note.dart';
 import 'package:goalmine_mobile/services/objective_services/score_service.dart';
 import 'package:goalmine_mobile/ui/loading_screen.dart';
+import 'package:goalmine_mobile/ui/objective/score_chart.dart';
 
 class Objectives extends StatefulWidget {
   final Objective objective;
@@ -38,10 +39,11 @@ class ObjectiveState extends State<Objectives> {
 
     return Scaffold(
         appBar: AppBar(
-          iconTheme: new IconThemeData(color: Colors.red),
-          title: Text('GoalMine',
+          backgroundColor: primaryColor,
+          //iconTheme: new IconThemeData(color: Colors.red),
+          title: Text('Objective 1',
               style: TextStyle(
-                  color: primaryColor,
+                  color: Colors.white,
                   fontWeight: FontWeight.w400,
                   fontSize: 25,
                   letterSpacing: 1.0)),
@@ -49,8 +51,8 @@ class ObjectiveState extends State<Objectives> {
         body: ListView (
           children: <Widget>[
             _buildObjectiveCard(widget.objective),
-            _buildScoreCard(),
             _buildNoteCard(),
+            ScoreChart(animate: true, scores: widget.objective.scores)
           ],
         ));
   }
@@ -118,37 +120,6 @@ class ObjectiveState extends State<Objectives> {
                         )])))));
   }
 
-  Widget _buildScoreCard() {
-    final transparentBorders =
-    Theme.of(context).copyWith(dividerColor: Colors.transparent);
-
-    return Padding(
-        padding: EdgeInsets.only(top: 5),
-        child: Card(
-            elevation: 2.5,
-            shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            child: Theme(
-                data: transparentBorders,
-                child: Container(
-                    padding: EdgeInsets.only(top: 15, bottom: 15, left: 5),
-                    child: ExpansionTile(
-                      title: Text('Scores',
-                          style: TextStyle(fontWeight: FontWeight.w500)),
-                      leading: Icon(
-                        Icons.assessment,
-                        color: Colors.red[400],
-                      ),
-                      children: <Widget>[
-                        Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-
-                            ]) //CHANGE HERE
-
-                      ])))));
-  }
-
   Widget _buildInfoTile(IconData icon, String text) => ListTile(
       contentPadding: EdgeInsets.only(left: 18),
       title: Text(text, style: TextStyle(fontSize: 13)),
@@ -161,6 +132,11 @@ class ObjectiveState extends State<Objectives> {
 
   void _getScores() {
     _scoreService.getScores(widget.objective.id).then((scores) =>
-        setState(() => widget.objective.scores = scores));
+        setState(() {
+          widget.objective.scores = scores;
+          widget.objective.scores.forEach((element) {
+            print(element.toString() +  "\n");
+          });
+        }));
   }
 }

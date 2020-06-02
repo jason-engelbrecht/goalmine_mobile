@@ -1,21 +1,13 @@
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
+import 'package:goalmine_mobile/models/objective/score.dart';
 
 class ScoreChart extends StatelessWidget {
-  final List<charts.Series> seriesList;
+  final List<charts.Series> seriesList = _createSampleData();
   final bool animate;
+  final List<Score> scores;
 
-  ScoreChart(this.seriesList, {this.animate});
-
-  /// Creates a [TimeSeriesChart] with sample data and no transition.
-  factory ScoreChart.withSampleData() {
-    return new ScoreChart(
-      _createSampleData(),
-      // Disable animations for image tests.
-      animate: false,
-    );
-  }
-
+  ScoreChart({this.animate, this.scores});
 
   @override
   Widget build(BuildContext context) {

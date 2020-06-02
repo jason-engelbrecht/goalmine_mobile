@@ -6,7 +6,7 @@ class Styles {
   static ThemeData themeData(bool isDarkTheme, BuildContext context) {
     return ThemeData(
       primarySwatch: Colors.red,
-      primaryColor: isDarkTheme ? Colors.black : Colors.red,
+      primaryColor: isDarkTheme ? Colors.black : Colors.red[400],
       canvasColor: isDarkTheme ? Colors.grey[-50] : Colors.grey[50],
       backgroundColor: isDarkTheme ? Colors.white : Colors.grey,
       disabledColor: Colors.grey,
