@@ -6,6 +6,7 @@ import 'package:goalmine_mobile/models/parent.dart';
 import 'package:goalmine_mobile/models/objective/note.dart';
 import 'package:goalmine_mobile/dark_mode/dark_mode.dart';
 import 'package:goalmine_mobile/services/objective_services/score_service.dart';
+import 'package:goalmine_mobile/ui/loading_screen.dart';
 import 'package:provider/provider.dart';
 
 class Objectives extends StatefulWidget {
@@ -28,8 +29,17 @@ class ObjectiveState extends State<Objectives> {
     final themeChange = Provider.of<DarkThemeProvider>(context);
     final Color primaryColor = Theme.of(context).primaryColor;
 
-    _getScores();
-    _getNotes();
+    bool isLoading =
+        widget.objective.scores == null || widget.objective.notes == null ||
+        widget.objective.scores.isEmpty || widget.objective.notes.isEmpty;
+
+    if(isLoading) {
+      if(mounted) {
+        _getScores();
+        _getNotes();
+      }
+      return LoadingScreen();
+    }
 
     return Scaffold(
         appBar: AppBar(
@@ -92,6 +102,13 @@ class ObjectiveState extends State<Objectives> {
             _buildNoteCard(),
           ],
         ));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    widget.objective.notes = null;
+    widget.objective.scores = null;
   }
 
   Widget _buildObjectiveCard(Objective objective) {
@@ -195,5 +212,4 @@ class ObjectiveState extends State<Objectives> {
     _scoreService.getScores(widget.objective.id).then((scores) =>
         setState(() => widget.objective.scores = scores));
   }
-
 }

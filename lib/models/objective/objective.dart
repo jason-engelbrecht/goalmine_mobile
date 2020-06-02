@@ -22,8 +22,8 @@ class Objective {
   bool atOpportunity;
   int frequency;
   String timePeriod;
-  List<Score> scores = new List();
-  List<Note> notes = new List();
+  List<Score> scores = List<Score>();
+  List<Note> notes = List<Note>();
 
   Objective({
     this.id,

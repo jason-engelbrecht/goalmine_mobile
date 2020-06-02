@@ -3,7 +3,7 @@ import 'package:goalmine_mobile/models/goal.dart';
 import 'package:goalmine_mobile/models/parent.dart';
 import 'package:goalmine_mobile/models/student.dart';
 import 'package:goalmine_mobile/models/objective/objective.dart';
-import 'package:goalmine_mobile/ui/objective/objectives.dart';
+import 'package:goalmine_mobile/ui/objective/objective.dart';
 
 class Goals extends StatefulWidget {
   final List<Student> students;
