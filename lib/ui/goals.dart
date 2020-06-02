@@ -45,7 +45,7 @@ class GoalsState extends State<Goals> {
         margin: EdgeInsets.only(left: 10),
         child: ActionChip(
           elevation: 2.5,
-          avatar: Icon(Icons.check, color: Colors.white),
+          avatar: Icon(Icons.account_circle, color: Colors.white),
           label:
               Text(name, style: TextStyle(color: Colors.white, fontSize: 16)),
           backgroundColor: Colors.red[400],
