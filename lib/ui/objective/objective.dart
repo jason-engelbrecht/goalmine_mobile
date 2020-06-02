@@ -2,18 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:goalmine_mobile/services/objective_services/note_service.dart';
 import 'package:goalmine_mobile/models/objective/objective.dart';
-import 'package:goalmine_mobile/models/parent.dart';
 import 'package:goalmine_mobile/models/objective/note.dart';
-import 'package:goalmine_mobile/dark_mode/dark_mode.dart';
 import 'package:goalmine_mobile/services/objective_services/score_service.dart';
 import 'package:goalmine_mobile/ui/loading_screen.dart';
-import 'package:provider/provider.dart';
 
 class Objectives extends StatefulWidget {
   final Objective objective;
-  final Parent parent;
   final Note note;
-  const Objectives({Key key, this.objective, this.parent, this.note})
+  const Objectives({Key key, this.objective, this.note})
       : super(key: key);
 
   @override
@@ -26,7 +22,6 @@ class ObjectiveState extends State<Objectives> {
 
   @override
   Widget build(BuildContext context) {
-    final themeChange = Provider.of<DarkThemeProvider>(context);
     final Color primaryColor = Theme.of(context).primaryColor;
 
     bool isLoading =
@@ -50,50 +45,6 @@ class ObjectiveState extends State<Objectives> {
                   fontWeight: FontWeight.w400,
                   fontSize: 25,
                   letterSpacing: 1.0)),
-        ),
-        drawer: Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: <Widget>[
-              DrawerHeader(
-                  decoration: BoxDecoration(
-                    color: Colors.red[400],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Container(
-                        child: Text(
-                          'GoalMine',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w400,
-                              fontSize: 25,
-                              letterSpacing: 1.0),
-                        ),
-                        margin: EdgeInsets.only(bottom: 5),
-                      ),
-                      Text(widget.parent.username,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 20,
-                          )),
-                    ],
-                  )),
-              SwitchListTile(
-                  title: const Text('Dark Mode'),
-                  value: themeChange.darkTheme,
-                  secondary: const Icon(Icons.lightbulb_outline),
-                  onChanged: (bool value) {
-                    themeChange.darkTheme = value;
-                  }),
-              ListTile(
-                leading: Icon(Icons.lock_open),
-                title: Text('Logout'),
-              ),
-            ],
-          ),
         ),
         body: ListView (
           children: <Widget>[

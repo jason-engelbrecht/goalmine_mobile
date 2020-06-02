@@ -8,8 +8,7 @@ import 'package:goalmine_mobile/ui/objective/objective.dart';
 class Goals extends StatefulWidget {
   final List<Student> students;
   final List<Goal> goals;
-  final Parent parent;
-  const Goals({Key key, this.students, this.goals, this.parent})
+  const Goals({Key key, this.students, this.goals})
       : super(key: key);
 
   @override
@@ -110,8 +109,7 @@ class GoalsState extends State<Goals> {
               Navigator.push(
               context,
               MaterialPageRoute(builder: (context) =>
-                  Objectives(objective: objective, parent: widget.parent,)),
+                  Objectives(objective: objective)),
               )}));
-            //TODO send objective to an objective page
   }
 }

@@ -102,8 +102,7 @@ class NavState extends State<Nav> {
                 ],
               ),
             ),
-          body: Goals(students: widget.parent.students,
-                    goals: widget.parent.goals, parent: widget.parent)));
+          body: Goals(students: widget.parent.students, goals: widget.parent.goals)));
   }
 
   void _getStudents() {
