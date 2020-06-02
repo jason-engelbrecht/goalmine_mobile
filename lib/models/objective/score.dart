@@ -8,29 +8,37 @@ String scoresToJson(List<Score> data) =>
 
 class Score {
   int id;
+  int objectiveId;
   int score;
   DateTime dateRecorded;
+  DateTime date;
 
   Score({
     this.id,
+    this.objectiveId,
     this.score,
-    this.dateRecorded
+    this.dateRecorded,
+    this.date,
   });
 
   factory Score.fromJson(Map<String, dynamic> json) => Score(
     id: json["ID"],
+    objectiveId: json["ObjectiveId"],
     score: json["Score"],
-    dateRecorded: DateTime.parse(json["DataRecorded"])
+    dateRecorded: DateTime.parse(json["DateRecorded"]),
+    date: DateTime.parse(json["Date"]),
   );
 
   Map<String, dynamic> toJson() => {
     "ID": id,
+    "ObjectiveId": objectiveId,
     "Score": score,
-    "DateRecorded": dateRecorded.toIso8601String()
+    "DateRecorded": dateRecorded.toIso8601String(),
+    "Date": date.toIso8601String(),
   };
 
   @override
   String toString() {
-    return 'Score{id: $id, score: $score, date recorded: $dateRecorded}';
+    return 'Score{id: $id, objectiveId: $objectiveId, score: $score, dateRecorded: $dateRecorded, date: $date}';
   }
 }

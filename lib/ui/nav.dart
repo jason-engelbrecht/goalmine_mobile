@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:goalmine_mobile/models/goal.dart';
-import 'package:goalmine_mobile/models/objective.dart';
+import 'package:goalmine_mobile/models/objective/objective.dart';
 import 'package:goalmine_mobile/models/parent.dart';
 import 'package:goalmine_mobile/models/student.dart';
 import 'package:goalmine_mobile/services/goal_service.dart';
 import 'package:goalmine_mobile/services/student_service.dart';
-import 'package:goalmine_mobile/services/objective_service.dart';
+import 'package:goalmine_mobile/services/objective_services/objective_service.dart';
 import 'package:goalmine_mobile/ui/goals.dart';
 import 'package:goalmine_mobile/ui/loading_screen.dart';
 import 'package:goalmine_mobile/dark_mode/dark_mode.dart';

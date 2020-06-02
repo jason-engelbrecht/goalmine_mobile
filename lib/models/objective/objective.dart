@@ -1,8 +1,6 @@
 import 'dart:convert';
-
-import 'package:goalmine_mobile/models/evidence.dart';
-import 'package:goalmine_mobile/models/note.dart';
-import 'package:goalmine_mobile/models/score.dart';
+import 'package:goalmine_mobile/models/objective/note.dart';
+import 'package:goalmine_mobile/models/objective/score.dart';
 
 List<Objective> objectivesFromJson(String str) =>
     List<Objective>.from(json.decode(str).map((x) => Objective.fromJson(x)));

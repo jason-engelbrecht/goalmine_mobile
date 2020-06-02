@@ -1,6 +1,5 @@
 import 'dart:convert';
-
-import 'package:goalmine_mobile/models/objective.dart';
+import 'package:goalmine_mobile/models/objective/objective.dart';
 
 List<Goal> goalsFromJson(String str) =>
     List<Goal>.from(json.decode(str).map((x) => Goal.fromJson(x)));

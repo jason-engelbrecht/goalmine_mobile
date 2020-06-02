@@ -1,12 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:goalmine_mobile/services/evidence_service.dart';
-import 'package:goalmine_mobile/services/note_service.dart';
-import 'package:goalmine_mobile/models/objective.dart';
+import 'package:goalmine_mobile/services/objective_services/note_service.dart';
+import 'package:goalmine_mobile/models/objective/objective.dart';
 import 'package:goalmine_mobile/models/parent.dart';
-import 'package:goalmine_mobile/models/note.dart';
+import 'package:goalmine_mobile/models/objective/note.dart';
 import 'package:goalmine_mobile/dark_mode/dark_mode.dart';
-import 'package:goalmine_mobile/services/score_service.dart';
+import 'package:goalmine_mobile/services/objective_services/score_service.dart';
 import 'package:provider/provider.dart';
 
 class Objectives extends StatefulWidget {
@@ -189,7 +188,7 @@ class ObjectiveState extends State<Objectives> {
 
   void _getNotes() {
     _noteService.getNotes(widget.objective.id).then((notes) =>
-    setState(() => widget.objective.notes = notes));
+        setState(() => widget.objective.notes = notes));
   }
 
   void _getScores() {

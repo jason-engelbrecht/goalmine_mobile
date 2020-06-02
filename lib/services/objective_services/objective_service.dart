@@ -1,4 +1,4 @@
-import 'package:goalmine_mobile/models/objective.dart';
+import 'package:goalmine_mobile/models/objective/objective.dart';
 import 'package:goalmine_mobile/services/service.dart';
 
 class ObjectiveService extends Service {
