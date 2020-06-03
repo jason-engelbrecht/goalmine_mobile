@@ -24,7 +24,6 @@ class ObjectiveState extends State<Objectives> {
 
   @override
   Widget build(BuildContext context) {
-    final Color primaryColor = Theme.of(context).primaryColor;
 
     bool isLoading =
         widget.objective.scores == null || widget.objective.notes == null ||
@@ -40,10 +39,11 @@ class ObjectiveState extends State<Objectives> {
 
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.red[400],
           iconTheme: new IconThemeData(color: Colors.black),
           title: Text('GoalMine',
               style: TextStyle(
-                  color: primaryColor,
+                  color: Colors.white,
                   fontWeight: FontWeight.w400,
                   fontSize: 25,
                   letterSpacing: 1.0)),
