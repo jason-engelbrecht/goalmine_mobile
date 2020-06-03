@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:goalmine_mobile/models/objective/score.dart';
 
 class ScoreChart extends StatelessWidget {
-  final List<charts.Series> seriesList = _createSampleData();
   final bool animate;
   final List<Score> scores;
 
@@ -11,42 +10,22 @@ class ScoreChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new charts.TimeSeriesChart(
-      seriesList,
+    return charts.TimeSeriesChart(
+      _createChartData(),
       animate: animate,
-      // Configures an axis spec that is configured to render one tick at each
-      // end of the axis range, anchored "inside" the axis. The start tick label
-      // will be left-aligned with its tick mark, and the end tick label will be
-      // right-aligned with its tick mark.
-      domainAxis: new charts.EndPointsTimeAxisSpec(),
+      domainAxis: charts.EndPointsTimeAxisSpec(),
     );
   }
 
-  /// Create one series with sample hard coded data.
-  static List<charts.Series<TimeSeriesSales, DateTime>> _createSampleData() {
-    final data = [
-      new TimeSeriesSales(new DateTime(2017, 9, 19), 5),
-      new TimeSeriesSales(new DateTime(2017, 9, 26), 25),
-      new TimeSeriesSales(new DateTime(2017, 10, 3), 100),
-      new TimeSeriesSales(new DateTime(2017, 10, 10), 75),
-    ];
-
+  List<charts.Series<Score, DateTime>> _createChartData() {
     return [
-      new charts.Series<TimeSeriesSales, DateTime>(
-        id: 'Sales',
-        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-        domainFn: (TimeSeriesSales sales, _) => sales.time,
-        measureFn: (TimeSeriesSales sales, _) => sales.sales,
-        data: data,
+      charts.Series<Score, DateTime>(
+        id: 'Scores',
+        colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+        domainFn: (Score score, _) => score.dateRecorded,
+        measureFn: (Score score, _) => score.score,
+        data: scores,
       )
     ];
   }
-}
-
-/// Sample time series data type.
-class TimeSeriesSales {
-  final DateTime time;
-  final int sales;
-
-  TimeSeriesSales(this.time, this.sales);
 }
