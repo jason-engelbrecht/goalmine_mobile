@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:goalmine_mobile/services/objective_services/note_service.dart';
 import 'package:goalmine_mobile/models/objective/objective.dart';
-import 'package:goalmine_mobile/models/objective/note.dart';
 import 'package:goalmine_mobile/services/objective_services/score_service.dart';
 import 'package:goalmine_mobile/ui/loading_screen.dart';
 import 'package:goalmine_mobile/ui/objective/notes.dart';
 import 'package:goalmine_mobile/ui/objective/objective_card.dart';
+import 'package:goalmine_mobile/ui/objective/score_cards.dart';
 import 'package:goalmine_mobile/ui/objective/score_chart.dart';
 
 class Objectives extends StatefulWidget {
@@ -28,7 +28,7 @@ class ObjectiveState extends State<Objectives> {
 
     bool isLoading =
         widget.objective.scores == null || widget.objective.notes == null ||
-        widget.objective.scores.isEmpty || widget.objective.notes.isEmpty;
+        widget.objective.scores.isEmpty; //|| widget.objective.notes.isEmpty;
 
     if(isLoading) {
       if(mounted) {
@@ -50,15 +50,18 @@ class ObjectiveState extends State<Objectives> {
         ),
         body: ListView(
           children: <Widget>[
-            ObjectiveCard(objective: widget.objective),
+            ScoreCards(scores: widget.objective.scores),
             SizedBox(
                 height: 250,
                 child: Card(
                     elevation: 2.5,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
                     child: Padding(
-                        padding: EdgeInsets.all(10),
+                        padding: EdgeInsets.only(top: 20, bottom: 20, left: 15, right: 5),
                         child: ScoreChart(
                             animate: true, scores: widget.objective.scores)))),
+            ObjectiveCard(objective: widget.objective),
             Notes(notes: widget.objective.notes)
           ],
         ));
