@@ -13,7 +13,18 @@ class ScoreChart extends StatelessWidget {
     return charts.TimeSeriesChart(
       _createChartData(),
       animate: animate,
-      domainAxis: charts.EndPointsTimeAxisSpec(),
+      domainAxis: charts.EndPointsTimeAxisSpec(
+          renderSpec: charts.SmallTickRendererSpec(
+              labelStyle:
+                  charts.TextStyleSpec(color: charts.MaterialPalette.black),
+              lineStyle:
+                  charts.LineStyleSpec(color: charts.MaterialPalette.black))),
+      primaryMeasureAxis: charts.NumericAxisSpec(
+          renderSpec: charts.GridlineRendererSpec(
+              labelStyle:
+                  charts.TextStyleSpec(color: charts.MaterialPalette.black),
+              lineStyle:
+                  charts.LineStyleSpec(color: charts.MaterialPalette.black))),
     );
   }
 
