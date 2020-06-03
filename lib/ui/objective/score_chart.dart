@@ -18,13 +18,13 @@ class ScoreChart extends StatelessWidget {
               labelStyle:
                   charts.TextStyleSpec(color: charts.MaterialPalette.black),
               lineStyle:
-                  charts.LineStyleSpec(color: charts.MaterialPalette.black))),
+                  charts.LineStyleSpec(color: charts.MaterialPalette.gray.shadeDefault))),
       primaryMeasureAxis: charts.NumericAxisSpec(
           renderSpec: charts.GridlineRendererSpec(
               labelStyle:
                   charts.TextStyleSpec(color: charts.MaterialPalette.black),
               lineStyle:
-                  charts.LineStyleSpec(color: charts.MaterialPalette.black))),
+                  charts.LineStyleSpec(color: charts.MaterialPalette.gray.shadeDefault))),
     );
   }
 

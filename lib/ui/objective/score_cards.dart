@@ -24,7 +24,7 @@ class ScoreCards extends StatelessWidget {
     String formattedDate = DateFormat('MM/dd').format(score.dateRecorded);
 
     return Container(
-        margin: EdgeInsets.only(bottom: 7.5, top: 10),
+        margin: EdgeInsets.only(bottom: 10, top: 10),
         child: Card(
             color: Colors.red[300],
             elevation: 2.5,

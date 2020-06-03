@@ -102,8 +102,10 @@ class GoalsState extends State<Goals> {
         margin: EdgeInsets.only(left: 10),
         child: ActionChip(
             elevation: 1,
-            avatar: Icon(Icons.access_time, size: 17.5),
-            label: Text("objective ${objective.objectiveNum}"),
+            backgroundColor: Colors.red[300],
+            avatar: Icon(Icons.access_time, size: 17.5, color: Colors.white),
+            label: Text("objective ${objective.objectiveNum}",
+                style: TextStyle(color: Colors.white, fontSize: 15)),
             labelPadding: EdgeInsets.only(left: 2.5, right: 5),
             onPressed: () => {
               Navigator.push(

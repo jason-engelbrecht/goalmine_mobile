@@ -11,8 +11,8 @@ class Notes extends StatelessWidget {
     final transparentBorders =
         Theme.of(context).copyWith(dividerColor: Colors.transparent);
 
-    return Padding(
-        padding: EdgeInsets.only(top: 5),
+    return Container(
+        margin: EdgeInsets.only(top: 10),
         child: Card(
             elevation: 2.5,
             shape:

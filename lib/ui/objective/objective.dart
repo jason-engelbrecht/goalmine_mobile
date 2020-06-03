@@ -40,8 +40,7 @@ class ObjectiveState extends State<Objectives> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.red[400],
-          iconTheme: new IconThemeData(color: Colors.black),
-          title: Text('GoalMine',
+          title: Text('Objective ${widget.objective.objectiveNum}',
               style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w400,
@@ -58,7 +57,7 @@ class ObjectiveState extends State<Objectives> {
                     elevation: 2.5,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
-                    child: Padding(
+                    child: Container(
                         padding: EdgeInsets.only(top: 20, bottom: 20, left: 15, right: 5),
                         child: ScoreChart(
                             animate: true, scores: widget.objective.scores)))),
