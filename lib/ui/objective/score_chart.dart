@@ -10,6 +10,8 @@ class ScoreChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    _removeNullScores();
+
     return charts.TimeSeriesChart(
       _createChartData(),
       animate: animate,
@@ -27,5 +29,9 @@ class ScoreChart extends StatelessWidget {
         data: scores,
       )
     ];
+  }
+
+  void _removeNullScores() {
+    scores.removeWhere((score) => score.score == null);
   }
 }
