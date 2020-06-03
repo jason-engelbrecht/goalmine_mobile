@@ -50,7 +50,7 @@ class NavState extends State<Nav> {
         },
         child: Scaffold(
             appBar: AppBar(
-              iconTheme: new IconThemeData(color: Colors.red),
+              iconTheme: new IconThemeData(color: Colors.black),
               title: Text('GoalMine',
                   style: TextStyle(
                       color: primaryColor,

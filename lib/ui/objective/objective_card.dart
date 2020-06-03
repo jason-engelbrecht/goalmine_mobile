@@ -8,20 +8,28 @@ class ObjectiveCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    final transparentBorders =
+    Theme.of(context).copyWith(dividerColor: Colors.transparent);
+
+    return Padding(
         padding: EdgeInsets.only(top: 5),
-        margin: EdgeInsets.only(top: 5, bottom: 5),
         child: Card(
             elevation: 2.5,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10)),
-            child: Container(
-                padding: EdgeInsets.only(top: 10, bottom: 10, left: 5, right: 5),
-                child: ListTile(
-                    title: Text('${objective.objectiveDescription}',
-                        style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.w400))
-                ))));
+            shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            child: Theme(
+                data: transparentBorders,
+                child: Container(
+                    padding: EdgeInsets.only(top: 15, bottom: 15, left: 5),
+                    child: ListTile(
+                      title: Text('Objective ' + '${objective.objectiveNum}'
+                          + ': \n',
+                          style: TextStyle(fontWeight: FontWeight.w500)),
+                      subtitle: Text('${objective.objectiveDescription}'),
+                      leading: Icon(
+                        Icons.assignment_turned_in,
+                        color: Colors.red[400],
+                      ),
+                    )))));
   }
 }

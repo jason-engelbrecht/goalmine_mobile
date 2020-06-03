@@ -40,16 +40,17 @@ class ObjectiveState extends State<Objectives> {
 
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: primaryColor,
-          title: Text('Objective ${widget.objective.objectiveNum}',
+          iconTheme: new IconThemeData(color: Colors.black),
+          title: Text('GoalMine',
               style: TextStyle(
-                  color: Colors.white,
+                  color: primaryColor,
                   fontWeight: FontWeight.w400,
                   fontSize: 25,
                   letterSpacing: 1.0)),
         ),
         body: ListView(
           children: <Widget>[
+            ObjectiveCard(objective: widget.objective),
             ScoreCards(scores: widget.objective.scores),
             SizedBox(
                 height: 250,
@@ -61,7 +62,6 @@ class ObjectiveState extends State<Objectives> {
                         padding: EdgeInsets.only(top: 20, bottom: 20, left: 15, right: 5),
                         child: ScoreChart(
                             animate: true, scores: widget.objective.scores)))),
-            ObjectiveCard(objective: widget.objective),
             Notes(notes: widget.objective.notes)
           ],
         ));
