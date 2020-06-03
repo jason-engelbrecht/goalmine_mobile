@@ -40,8 +40,7 @@ class ObjectiveState extends State<Objectives> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: primaryColor,
-          //iconTheme: new IconThemeData(color: Colors.red),
-          title: Text('Objective 1',
+          title: Text('Objective ${widget.objective.objectiveNum}',
               style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w400,
@@ -52,7 +51,14 @@ class ObjectiveState extends State<Objectives> {
           children: <Widget>[
             _buildObjectiveCard(widget.objective),
             _buildNoteCard(),
-            ScoreChart(animate: true, scores: widget.objective.scores)
+            SizedBox(
+              height: 250,
+              child: Card(
+                elevation: 2.5,
+                child: Padding(
+                  padding: EdgeInsets.all(10),
+                  child: ScoreChart(animate: true, scores: widget.objective.scores)
+                )))
           ],
         ));
   }
