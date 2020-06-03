@@ -8,6 +8,7 @@ class ScoreCards extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    _removeNullScores();
     return SizedBox(
         height: 85,
         child: ListView.builder(
@@ -48,4 +49,7 @@ class ScoreCards extends StatelessWidget {
                   )]))
         ));
   }
+
+  void _removeNullScores() =>
+      scores.removeWhere((score) => score.score == null);
 }
